@@ -1,21 +1,14 @@
-
-let stockList = '';
-for (var i=0; i<4;i++){
-  stockList += '<li class="test">'+ i + '番目の問題集です。</li>';　// = ではなく += を使う
-}
-
-document.getElementById('tests').innerHTML = stockList;
-
 let currentUID = "";
+const signOutButton = document.getElementById('logout');
 
 window.addEventListener('load', function () {
   // Bind Sign in button.
-  if(currentUID === ""){
-    let provider = new firebase.auth.GoogleAuthProvider();
-    firebase.auth().signInWithPopup(provider);
-  }
+  // if(currentUID === ""){
+  //   let provider = new firebase.auth.GoogleAuthProvider();
+  //   firebase.auth().signInWithPopup(provider);
+  // }
 
-  signOutButton.addEventListener('click', function() {
+  signOutButton.addEventListener('click', function () {
     firebase.auth().signOut();
   });
 
@@ -31,15 +24,23 @@ function onAuthStateChanged(user) {
 
   if (user) {
     currentUID = user.uid;
-    splashPage.style.display = 'none';
-
-    that.initTemplates();
-    that.initRouter();
+    loadTests();
   } else {
     // Set currentUID to null.
+    let provider = new firebase.auth.GoogleAuthProvider();
+    firebase.auth().signInWithPopup(provider);
     currentUID = null;
-    splashPage.style.display = null;
-
     // Display the splash page where you can sign-in.
   }
+}
+
+function loadTests() {
+  let stockList = '';
+  firebase.firestore().collection("tests").limit(50).where('userId', '==', currentUID).get().then((querySnapshot) => {
+    querySnapshot.forEach((doc) => {
+      console.log(`${doc.data().name} => ${doc.id}`);
+      stockList += '<li class="test">' + doc.data().name + '</li>';　// = ではなく += を使う
+    });
+    document.getElementById('tests').innerHTML = stockList;
+  });
 }
