@@ -58,3 +58,14 @@ ul.test li {
   padding: 0.5em;
   list-style-type: none !important; /*ポチ消す*/
 }
+
+ul.test li:hover {
+  color: rgba(92, 92, 92, 0.96);
+  background: #d7d7d7; /*背景色*/
+}
+
+.clickable {
+  text-decoration: none;
+}
+
+
