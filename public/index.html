@@ -21,21 +21,35 @@
 <body>
 
 <div id="header">
-  <h1 id="title"><a href="/">暗記メーカー β版</a></h1>
+  <h1 id="title"><a href="/">暗記メーカー α版</a></h1>
   <button id="logout" class="btn-flat-border">ログアウト</button>
 </div>
 
-<ul id="form">
-  <p>問題文</p>
-  <form method="post">
-    <textarea id="text-question"></textarea>
-    <p>解答</p>
-    <textarea id="text-answer"></textarea><br>
-    <button id="save" class="btn-flat-border" type="button">保存</button>
-    <button id="delete-question" class="btn-flat-border" type="button">削除</button>
+<div id="form-test">
+  <div class="card-form">
+    <form method="post">
+      <div class="cp_iptxt">
+        <label class="ef">
+          <input type="text" id="text-test-title" placeholder="新しい問題集のタイトル">
+        </label>
+      </div>
+      <button id="save-test" class="btn-flat-border button-menu" type="button">追加して保存</button>
+    </form>
+  </div>
+</div>
 
-  </form>
-</ul>
+<div id="form-question">
+  <div class="card-form">
+    <p>問題文</p>
+    <form method="post">
+      <textarea id="text-question"></textarea>
+      <p>解答</p>
+      <textarea id="text-answer"></textarea><br>
+      <button id="save-question" class="btn-flat-border" type="button">保存</button>
+      <button id="delete-question" class="btn-flat-border" type="button">削除</button>
+    </form>
+  </div>
+</div>
 
 <div id="tests" class="tests"></div>
 

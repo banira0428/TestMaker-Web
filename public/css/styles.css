@@ -38,7 +38,7 @@
   color: white;
 }
 
-#form {
+#form-question {
   color: rgba(127, 127, 127, 0.96);
   width: 70%;
   margin-top: 8px;
@@ -46,12 +46,30 @@
   margin-right: auto;
   background: white;
   padding: 0.6em;
+  display: none;
+}
+
+#form-test {
+  color: rgba(127, 127, 127, 0.96);
+  width: 70%;
+  margin-top: 8px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 0.6em;
+  display: none;
+}
+
+.card-form {
+  background: white;
+  padding: 0.6em;
+  border-radius: 5px;
 }
 
 #tests {
   width: 70%;
   margin-left: auto;
   margin-right: auto;
+  margin-top: 8px;
 }
 
 #tests ul {
@@ -66,6 +84,7 @@
   line-height: 3;
   font-size: 24px;
   padding: 0.5em;
+  border-radius: 5px;
   list-style-type: none !important; /*ポチ消す*/
 }
 
@@ -77,7 +96,7 @@
 .questions .question {
   color: rgba(127, 127, 127, 0.96);
   border-left: solid 6px #2d8fdd; /*左側の線*/
-  background: #f1f8ff; /*背景色*/
+  background: white; /*背景色*/
   margin-bottom: 12px; /*下のバーとの余白*/
   line-height: 2;
   font-size: 16px;
@@ -99,6 +118,37 @@ a:-webkit-any-link {
   color: white;
 }
 
+.cp_iptxt {
+  position: relative;
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 8px;
+}
+
+.cp_iptxt input[type='text'] {
+  font: 15px/24px sans-serif;
+  box-sizing: border-box;
+  width: 100%;
+  padding: 0.3em;
+  transition: 0.3s;
+  letter-spacing: 1px;
+  line-height: 2;
+  color: #aaaaaa;
+  border: 1px solid #1b2538;
+  border-radius: 4px;
+}
+
+.ef input[type='text']:focus {
+  border: 1px solid #2CACE1;
+  outline: none;
+  box-shadow: 0 0 5px 1px rgba(46, 67, 150, 0.5);
+}
+
+.button-menu {
+  width: 100%;
+  line-height: 2;
+}
 
 
 
