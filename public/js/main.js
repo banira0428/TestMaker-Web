@@ -1,10 +1,11 @@
 let currentUID = "";
 const signOutButton = document.getElementById('logout');
+let that;
 
 initRouter = function () {
   this.router = new Navigo();
 
-  var that = this;
+  that = this;
   this.router
     .on({
       '/': function () {
@@ -13,9 +14,10 @@ initRouter = function () {
     })
     .on({
       '/tests/*': function () {
-        var path = that.getCleanPath(document.location.pathname);
-        var id = path.split('/')[2];
-        that.viewRestaurant(id);
+        let path = document.location.pathname;
+        console.log(path);
+        let id = path.split('/')[2];
+        loadQuestions(id);
       }
     })
     .resolve();
@@ -62,10 +64,28 @@ function loadTests() {
       stockList += '<a href="#" class="clickable" id=' + doc.id + '><li class="test">' + doc.data().name + '</li></a>';
     });
     document.getElementById('tests').innerHTML = stockList;
+    document.getElementById('tests').className = 'tests';
     let tests = document.getElementById("tests").children;
     for (let i = 0; i < tests.length; i++) {
       tests[i].addEventListener('click', function () {
-        console.log(tests[i].id);
+        that.router.navigate('/tests/' + tests[i].id);
+      });
+    }
+  });
+}
+
+function loadQuestions(id) {
+  let stockList = '';
+  firebase.firestore().collection("tests").doc(id).collection("questions").limit(300).get().then((querySnapshot) => {
+    querySnapshot.forEach((doc) => {
+      stockList += '<a  class="clickable" id=' + doc.id + '><li class="question">' + doc.data().question + '<br>' + doc.data().answer + '</li></a>';
+    });
+    document.getElementById('tests').innerHTML = stockList;
+    document.getElementById('tests').className = 'questions';
+    let tests = document.getElementById("tests").children;
+    for (let i = 0; i < tests.length; i++) {
+      tests[i].addEventListener('click', function () {
+        that.router.navigate('/tests/' + tests[i].id);
       });
     }
   });
