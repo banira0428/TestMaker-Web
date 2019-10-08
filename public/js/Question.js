@@ -41,6 +41,20 @@ Question.prototype = {
   },
   getOrder: function () {
     return this.order;
+  },
+  getObject: function(){
+    return {
+      question: this.question,
+      answer: this.answer,
+      explanation: this.explanation,
+      imageRef: this.imageRef,
+      auto: this.auto,
+      checkOrder: this.checkOrder,
+      others: this.others,
+      answers: this.answers,
+      type: this.type,
+      order: this.order
+    };
   }
 };
 
@@ -51,33 +65,46 @@ let QuestionBuilder = function () {
 QuestionBuilder.prototype = {
   setQuestion(question){
     this.question.question = question;
+    return this;
   },
   setAnswer(answer){
     this.question.answer = answer;
+    return this;
   },
   setExplanation(explanation){
     this.question.explanation = explanation;
+    return this;
   },
   setImageRef(imageRef){
     this.question.imageRef = imageRef;
+    return this;
   },
   setAuto(auto){
     this.question.auto = auto;
+    return this;
   },
   setCheckOrder(checkOrder){
     this.question.checkOrder = checkOrder;
+    return this;
   },
   setOthers(others){
     this.question.others = others;
+    return this;
   },
   setAnswers(answers){
     this.question.answers = answers;
+    return this;
   },
   setType(type){
     this.question.type = type;
+    return this;
   },
-  setOrder(){
+  setOrder(order){
     this.question.order = order;
+    return this;
+  },
+  build(){
+    return this.question;
   }
 };
 

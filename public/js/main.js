@@ -1,8 +1,8 @@
 const Types = {
-  WRITE : 0,
-  SELECT : 1,
-  COMPLETE : 2,
-  SELECT_COMPLETE : 3
+  WRITE: 0,
+  SELECT: 1,
+  COMPLETE: 2,
+  SELECT_COMPLETE: 3
 };
 
 
@@ -33,6 +33,7 @@ const formQuestionSelectList = [
   document.getElementById('text-question-other-select-4'),
   document.getElementById('text-question-other-select-5')
 ];
+const selectSelectSelectSize = document.getElementById('select-select-size');
 
 const formQuestionCompleteList = [
   document.getElementById('text-question-question-complete'),
@@ -41,6 +42,8 @@ const formQuestionCompleteList = [
   document.getElementById('text-question-answer-complete-3'),
   document.getElementById('text-question-answer-complete-4')
 ];
+const selectCompleteAnswerSize = document.getElementById('complete-answer-size');
+
 
 const formQuestionSelectCompleteList = [
   document.getElementById('text-question-question-select-complete'),
@@ -49,12 +52,17 @@ const formQuestionSelectCompleteList = [
   document.getElementById('text-question-answer-select-complete-3'),
   document.getElementById('text-question-answer-select-complete-4'),
   document.getElementById('text-question-answer-select-complete-5'),
+  document.getElementById('text-question-answer-select-complete-6'),
   document.getElementById('text-question-other-select-complete-1'),
   document.getElementById('text-question-other-select-complete-2'),
   document.getElementById('text-question-other-select-complete-3'),
   document.getElementById('text-question-other-select-complete-4'),
   document.getElementById('text-question-other-select-complete-5'),
+  document.getElementById('text-question-other-select-complete-6'),
 ];
+const selectSelectCompleteAnswerSize = document.getElementById('select-complete-answer-size');
+const selectSelectCompleteSelectSize = document.getElementById('select-complete-select-size');
+
 
 let that;
 let testId = '';
@@ -102,42 +110,76 @@ window.addEventListener('load', function () {
 
     let data = null;
 
+    let builder = new QuestionBuilder();
+
     switch (forms.tab_item.value) {
       case "write":
-        if(formQuestionWriteList.some(it => it.value === "")){
+        if (formQuestionWriteList.some(it => it.value === "")) {
           return;
         }
-
-        data = {
-
-        }
+        data = builder
+          .setQuestion(formQuestionWriteList[0].value)
+          .setAnswer(formQuestionWriteList[1].value)
+          .setOrder(size)
+          .build();
 
         break;
       case "select":
-        if(formQuestionSelectList.some(it => it.value === "")){
+        if (formQuestionSelectList.some(it => it.value === "")) {
           return;
         }
+        data = builder
+          .setQuestion(formQuestionSelectList[0].value)
+          .setAnswer(formQuestionSelectList[1].value)
+          .setOrder(size)
+          .build();
+
         break;
       case "complete":
-        if(formQuestionCompleteList.some(it => it.value === "")){
+        if (formQuestionCompleteList.some(it => it.value === "")) {
           return;
         }
         break;
       case  "select-complete":
-        if(formQuestionSelectCompleteList.some(it => it.value === "")){
+        if (formQuestionSelectCompleteList.some(it => it.value === "")) {
           return;
         }
         break;
     }
 
-    console.log("全部入力されています！");
-    return;
-
     if (selectedQuestion !== null) {
-      saveQuestion();
+      saveQuestion(data);
     } else {
-      addQuestion();
+      addQuestion(data);
     }
+  });
+
+  selectSelectSelectSize.addEventListener('change',function() {
+    formQuestionSelectList.forEach((value, index) => {
+      if (selectSelectSelectSize.value < index) {
+        formQuestionSelectList[index].style.display = "none";
+      }else{
+        formQuestionSelectList[index].style.display = "block";
+      }
+    });
+  });
+
+  selectCompleteAnswerSize.addEventListener('change',function() {
+    formQuestionCompleteList.forEach((value, index) => {
+      if (selectCompleteAnswerSize.value < index) {
+        formQuestionCompleteList[index].style.display = "none";
+      }else{
+        formQuestionCompleteList[index].style.display = "block";
+      }
+    });
+  });
+
+  selectSelectCompleteAnswerSize.addEventListener('change',function() {
+    reloadSelectCompleteForm()
+  });
+
+  selectSelectCompleteSelectSize.addEventListener('change',function() {
+    reloadSelectCompleteForm()
   });
 
   deleteButton.addEventListener('click', function () {
@@ -233,20 +275,9 @@ function loadQuestions() {
   });
 }
 
-function addQuestion() {
+function addQuestion(data) {
   firebase.firestore().collection("tests").doc(testId).collection("questions").add(
-    {
-      question: textQuestion.value,
-      answer: textAnswer.value,
-      explanation: "",
-      imageRef: "",
-      auto: false,
-      checkOrder: false,
-      others: [],
-      answers: [],
-      type: 0,
-      order: size
-    }
+    data.getObject()
   ).then(function () {
     loadQuestions();
     clearFormQuestion();
@@ -255,20 +286,9 @@ function addQuestion() {
   });
 }
 
-function saveQuestion() {
+function saveQuestion(data) {
   firebase.firestore().collection("tests").doc(testId).collection("questions").doc(selectedQuestion.id).set(
-    {
-      question: textQuestion.value,
-      answer: textAnswer.value,
-      explanation: selectedQuestion.data().explanation,
-      imageRef: selectedQuestion.data().imageRef,
-      auto: selectedQuestion.data().auto,
-      checkOrder: selectedQuestion.data().checkOrder,
-      others: selectedQuestion.data().others,
-      answers: selectedQuestion.data().answers,
-      type: selectedQuestion.data().type,
-      order: selectedQuestion.data().order
-    }
+    data.getObject()
   ).then(function () {
     loadQuestions();
     clearFormQuestion();
@@ -312,20 +332,26 @@ function clearFormQuestion() {
   textAnswer.value = "";
   selectedQuestion = null;
 }
-
-function createData(question,answer,explanation,imageRef,auto,checkOrder,others,answers,type,order) {
-  return {
-    question: question,
-    answer:  question,
-    explanation: selectedQuestion.data().explanation,
-    imageRef: selectedQuestion.data().imageRef,
-    auto: selectedQuestion.data().auto,
-    checkOrder: selectedQuestion.data().checkOrder,
-    others: selectedQuestion.data().others,
-    answers: selectedQuestion.data().answers,
-    type: selectedQuestion.data().type,
-    order: selectedQuestion.data().order
-  }
-
+function reloadSelectCompleteForm() {
+  formQuestionSelectCompleteList.forEach((value, index) => {
+    if(index > 6){
+      return;
+    }
+    if (selectSelectCompleteAnswerSize.value < index) {
+      formQuestionSelectCompleteList[index].style.display = "none";
+    }else{
+      formQuestionSelectCompleteList[index].style.display = "block";
+    }
+  });
+  formQuestionSelectCompleteList.forEach((value, index) => {
+    if(index <= 6){
+      return;
+    }
+    if (selectSelectCompleteSelectSize.value - selectSelectCompleteAnswerSize.value < (index - 6)) {
+      formQuestionSelectCompleteList[index].style.display = "none";
+    }else{
+      formQuestionSelectCompleteList[index].style.display = "block";
+    }
+  });
 }
 

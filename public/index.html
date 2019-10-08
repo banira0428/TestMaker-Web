@@ -96,13 +96,22 @@
               </div>
               <div class="cp_iptxt">
                 <label class="ef">
-                  <input type="text" id="text-question-other-select-4" placeholder="他の選択肢">
+                  <input type="text" id="text-question-other-select-4" placeholder="他の選択肢" class="none">
                 </label>
               </div>
               <div class="cp_iptxt">
                 <label class="ef">
-                  <input type="text" id="text-question-other-select-5" placeholder="他の選択肢">
+                  <input type="text" id="text-question-other-select-5" placeholder="他の選択肢" class="none">
                 </label>
+              </div>
+              <div class="cp_ipselect cp_sl01">
+                <select name="select-select-size" id="select-select-size">
+                  <option value="2">二択問題</option>
+                  <option value="3">三択問題</option>
+                  <option value="4" selected>四択問題</option>
+                  <option value="5">五択問題</option>
+                  <option value="6">六択問題</option>
+                </select>
               </div>
             </div>
           </div>
@@ -133,6 +142,13 @@
                   <input type="text" id="text-question-answer-complete-4" placeholder="解答4">
                 </label>
               </div>
+              <div class="cp_ipselect cp_sl01">
+                <select name="complete-answer-size" id="complete-answer-size">
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4" selected>4</option>
+                </select>
+              </div>
             </div>
           </div>
           <div class="tab_content" id="select-complete_content">
@@ -154,17 +170,22 @@
               </div>
               <div class="cp_iptxt">
                 <label class="ef">
-                  <input type="text" id="text-question-answer-select-complete-3" placeholder="解答3">
+                  <input type="text" id="text-question-answer-select-complete-3" placeholder="解答3" class="none">
                 </label>
               </div>
               <div class="cp_iptxt">
                 <label class="ef">
-                  <input type="text" id="text-question-answer-select-complete-4" placeholder="解答4">
+                  <input type="text" id="text-question-answer-select-complete-4" placeholder="解答4" class="none">
                 </label>
               </div>
               <div class="cp_iptxt">
                 <label class="ef">
-                  <input type="text" id="text-question-answer-select-complete-5" placeholder="解答5">
+                  <input type="text" id="text-question-answer-select-complete-5" placeholder="解答5" class="none">
+                </label>
+              </div>
+              <div class="cp_iptxt">
+                <label class="ef">
+                  <input type="text" id="text-question-answer-select-complete-6" placeholder="解答6" class="none">
                 </label>
               </div>
               <div class="cp_iptxt">
@@ -179,18 +200,43 @@
               </div>
               <div class="cp_iptxt">
                 <label class="ef">
-                  <input type="text" id="text-question-other-select-complete-3" placeholder="他の選択肢">
+                  <input type="text" id="text-question-other-select-complete-3" placeholder="他の選択肢" class="none">
                 </label>
               </div>
               <div class="cp_iptxt">
                 <label class="ef">
-                  <input type="text" id="text-question-other-select-complete-4" placeholder="他の選択肢">
+                  <input type="text" id="text-question-other-select-complete-4" placeholder="他の選択肢" class="none">
                 </label>
               </div>
               <div class="cp_iptxt">
                 <label class="ef">
-                  <input type="text" id="text-question-other-select-complete-5" placeholder="他の選択肢">
+                  <input type="text" id="text-question-other-select-complete-5" placeholder="他の選択肢" class="none">
                 </label>
+              </div>
+              <div class="cp_iptxt">
+                <label class="ef">
+                  <input type="text" id="text-question-other-select-complete-6" placeholder="他の選択肢" class="none">
+                </label>
+              </div>
+              <div class="cp_ipselect cp_sl01">
+                <select name="select-complete-answer-size" id="select-complete-answer-size">
+                  <option value="0">0</option>
+                  <option value="1">1</option>
+                  <option value="2" selected>2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                  <option value="6">6</option>
+                </select>
+              </div>
+              <div class="cp_ipselect cp_sl01">
+                <select name="select-complete-select-size" id="select-complete-select-size">
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4" selected>4</option>
+                  <option value="5">5</option>
+                  <option value="6">6</option>
+                </select>
               </div>
             </div>
           </div>
@@ -219,6 +265,7 @@
         integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 <script>window.jQuery || document.write('<script src="js/vendor/jquery-3.4.1.min.js"><\/script>')</script>
 <script src="js/plugins.js"></script>
+<script src="js/Question.js"></script>
 <script src="js/main.js"></script>
 
 <!-- Google Analytics: change UA-XXXXX-Y to be your site's ID. -->
