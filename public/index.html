@@ -25,33 +25,187 @@
   <button id="logout" class="btn-flat-border">ログアウト</button>
 </div>
 
-<div id="form-test">
-  <div class="card-form">
-    <form method="post">
-      <div class="cp_iptxt">
-        <label class="ef">
-          <input type="text" id="text-test-title" placeholder="新しい問題集のタイトル">
-        </label>
-      </div>
-      <button id="save-test" class="btn-flat-border button-menu" type="button">追加して保存</button>
-    </form>
-  </div>
-</div>
+<div id="content">
 
-<div id="form-question">
-  <div class="card-form">
-    <p>問題文</p>
-    <form method="post">
-      <textarea id="text-question"></textarea>
-      <p>解答</p>
-      <textarea id="text-answer"></textarea><br>
-      <button id="save-question" class="btn-flat-border" type="button">保存</button>
-      <button id="delete-question" class="btn-flat-border" type="button">削除</button>
-    </form>
+  <div id="form-test">
+    <div class="card-form">
+      <form method="post">
+        <div class="cp_iptxt">
+          <label class="ef">
+            <input type="text" id="text-test-title" placeholder="新しい問題集のタイトル">
+          </label>
+        </div>
+        <button id="save-test" class="btn-flat-border button-menu" type="button">追加して保存</button>
+      </form>
+    </div>
   </div>
-</div>
 
-<div id="tests" class="tests"></div>
+  <div id="form-question">
+    <div class="card-form">
+      <form id="form-question-tab">
+        <div class="tabs">
+          <input id="write" type="radio" name="tab_item" value="write" checked>
+          <label class="tab_item" for="write">記述</label>
+          <input id="select" type="radio" name="tab_item" value="select">
+          <label class="tab_item" for="select">選択</label>
+          <input id="complete" type="radio" name="tab_item" value="complete">
+          <label class="tab_item" for="complete">完答</label>
+          <input id="select-complete" type="radio" name="tab_item" value="select-complete">
+          <label class="tab_item" for="select-complete">選択完答</label>
+
+          <div class="tab_content" id="write_content">
+            <div class="tab_content_description" id="edit-question-write">
+              <div class="cp_iptxt">
+                <label class="ef">
+                  <input type="text" id="text-question-question" placeholder="問題文">
+                </label>
+              </div>
+              <div class="cp_iptxt">
+                <label class="ef">
+                  <input type="text" id="text-question-answer" placeholder="解答">
+                </label>
+              </div>
+            </div>
+          </div>
+          <div class="tab_content" id="select_content">
+            <div class="tab_content_description" id="edit-question-select">
+              <div class="cp_iptxt">
+                <label class="ef">
+                  <input type="text" id="text-question-question-select" placeholder="問題文">
+                </label>
+              </div>
+              <div class="cp_iptxt">
+                <label class="ef">
+                  <input type="text" id="text-question-answer-select" placeholder="解答">
+                </label>
+              </div>
+              <div class="cp_iptxt">
+                <label class="ef">
+                  <input type="text" id="text-question-other-select-1" placeholder="他の選択肢">
+                </label>
+              </div>
+              <div class="cp_iptxt">
+                <label class="ef">
+                  <input type="text" id="text-question-other-select-2" placeholder="他の選択肢">
+                </label>
+              </div>
+              <div class="cp_iptxt">
+                <label class="ef">
+                  <input type="text" id="text-question-other-select-3" placeholder="他の選択肢">
+                </label>
+              </div>
+              <div class="cp_iptxt">
+                <label class="ef">
+                  <input type="text" id="text-question-other-select-4" placeholder="他の選択肢">
+                </label>
+              </div>
+              <div class="cp_iptxt">
+                <label class="ef">
+                  <input type="text" id="text-question-other-select-5" placeholder="他の選択肢">
+                </label>
+              </div>
+            </div>
+          </div>
+          <div class="tab_content" id="complete_content">
+            <div class="tab_content_description" id="edit-question-complete">
+              <div class="cp_iptxt">
+                <label class="ef">
+                  <input type="text" id="text-question-question-complete" placeholder="問題文">
+                </label>
+              </div>
+              <div class="cp_iptxt">
+                <label class="ef">
+                  <input type="text" id="text-question-answer-complete-1" placeholder="解答1">
+                </label>
+              </div>
+              <div class="cp_iptxt">
+                <label class="ef">
+                  <input type="text" id="text-question-answer-complete-2" placeholder="解答2">
+                </label>
+              </div>
+              <div class="cp_iptxt">
+                <label class="ef">
+                  <input type="text" id="text-question-answer-complete-3" placeholder="解答3">
+                </label>
+              </div>
+              <div class="cp_iptxt">
+                <label class="ef">
+                  <input type="text" id="text-question-answer-complete-4" placeholder="解答4">
+                </label>
+              </div>
+            </div>
+          </div>
+          <div class="tab_content" id="select-complete_content">
+            <div class="tab_content_description" id="edit-question-select-complete">
+              <div class="cp_iptxt">
+                <label class="ef">
+                  <input type="text" id="text-question-question-select-complete" placeholder="問題文">
+                </label>
+              </div>
+              <div class="cp_iptxt">
+                <label class="ef">
+                  <input type="text" id="text-question-answer-select-complete-1" placeholder="解答1">
+                </label>
+              </div>
+              <div class="cp_iptxt">
+                <label class="ef">
+                  <input type="text" id="text-question-answer-select-complete-2" placeholder="解答2">
+                </label>
+              </div>
+              <div class="cp_iptxt">
+                <label class="ef">
+                  <input type="text" id="text-question-answer-select-complete-3" placeholder="解答3">
+                </label>
+              </div>
+              <div class="cp_iptxt">
+                <label class="ef">
+                  <input type="text" id="text-question-answer-select-complete-4" placeholder="解答4">
+                </label>
+              </div>
+              <div class="cp_iptxt">
+                <label class="ef">
+                  <input type="text" id="text-question-answer-select-complete-5" placeholder="解答5">
+                </label>
+              </div>
+              <div class="cp_iptxt">
+                <label class="ef">
+                  <input type="text" id="text-question-other-select-complete-1" placeholder="他の選択肢">
+                </label>
+              </div>
+              <div class="cp_iptxt">
+                <label class="ef">
+                  <input type="text" id="text-question-other-select-complete-2" placeholder="他の選択肢">
+                </label>
+              </div>
+              <div class="cp_iptxt">
+                <label class="ef">
+                  <input type="text" id="text-question-other-select-complete-3" placeholder="他の選択肢">
+                </label>
+              </div>
+              <div class="cp_iptxt">
+                <label class="ef">
+                  <input type="text" id="text-question-other-select-complete-4" placeholder="他の選択肢">
+                </label>
+              </div>
+              <div class="cp_iptxt">
+                <label class="ef">
+                  <input type="text" id="text-question-other-select-complete-5" placeholder="他の選択肢">
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <button id="save-question" class="btn-flat-border button-menu" type="button">保存</button>
+        <button id="delete-question" class="btn-flat-border button-menu" type="button">削除</button>
+        <button id="cancel-question" class="btn-flat-border button-menu" type="button">破棄</button>
+      </form>
+    </div>
+  </div>
+
+  <div id="tests" class="tests"></div>
+
+</div>
 
 <script src="/__/firebase/6.5.0/firebase-app.js"></script>
 <script src="/__/firebase/6.5.0/firebase-auth.js"></script>
