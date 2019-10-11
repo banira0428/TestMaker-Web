@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="utf-8">
-  <title>暗記メーカーβ版</title>
+  <title>暗記メーカー α版</title>
   <meta name="description" content="暗記メーカーのブラウザ版です">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -11,9 +11,9 @@
   <link rel="apple-touch-icon" href="icon.png">
   <!-- Place favicon.ico in the root directory -->
 
-  <link rel="stylesheet" href="css/normalize.css">
-  <link rel="stylesheet" href="css/main.css">
-  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/normalize.css" type="text/css">
+  <link rel="stylesheet" href="css/main.css" type="text/css">
+  <link rel="stylesheet" href="css/styles.css" type="text/css">
 
   <meta name="theme-color" content="#2CACE1">
 </head>
@@ -26,13 +26,12 @@
 </div>
 
 <div id="content">
-
   <div id="form-test">
     <div class="card-form">
       <form method="post">
         <div class="cp_iptxt">
           <label class="ef">
-            <input type="text" id="text-test-title" placeholder="新しい問題集のタイトル">
+            <textarea rows="1" wrap="soft" id="text-test-title" placeholder="新しい問題集のタイトル"></textarea>
           </label>
         </div>
         <button id="save-test" class="btn-flat-border button-menu" type="button">追加して保存</button>
@@ -40,222 +39,185 @@
     </div>
   </div>
 
-  <div id="form-question">
+  <div id="form-question" class="none">
     <div class="card-form">
-      <form id="form-question-tab">
-        <div class="tabs">
-          <input id="write" type="radio" name="tab_item" value="write" checked>
-          <label class="tab_item" for="write">記述</label>
-          <input id="select" type="radio" name="tab_item" value="select">
-          <label class="tab_item" for="select">選択</label>
-          <input id="complete" type="radio" name="tab_item" value="complete">
-          <label class="tab_item" for="complete">完答</label>
-          <input id="select-complete" type="radio" name="tab_item" value="select-complete">
-          <label class="tab_item" for="select-complete">選択完答</label>
 
-          <div class="tab_content" id="write_content">
-            <div class="tab_content_description" id="edit-question-write">
+      <div id="form-header">
+        <p id="form-header-title">問題の編集</p>
+        <button id="cancel-question" class="btn-flat-border none" type="button">編集内容の破棄</button>
+      </div>
+
+      <div id="form-question-tab">
+        <div class="tabs">
+          <input id="write" type="radio" name="tab_item" value="0" checked>
+          <label class="tab_item" for="write">記述</label>
+          <input id="select" type="radio" name="tab_item" value="1">
+          <label class="tab_item" for="select">選択</label>
+          <input id="complete" type="radio" name="tab_item" value="2">
+          <label class="tab_item" for="complete">完答</label>
+          <input id="select-complete" type="radio" name="tab_item" value="3">
+          <label class="tab_item" for="select-complete">選択完答</label>
+          <div class="tab_content">
+
+            <div id="group-text-question-question">
               <div class="cp_iptxt">
                 <label class="ef">
-                  <input type="text" id="text-question-question" placeholder="問題文">
-                </label>
-              </div>
-              <div class="cp_iptxt">
-                <label class="ef">
-                  <input type="text" id="text-question-answer" placeholder="解答">
+                  <textarea rows="1" wrap="soft" id="text-question-question" placeholder="問題文"></textarea>
                 </label>
               </div>
             </div>
-          </div>
-          <div class="tab_content" id="select_content">
-            <div class="tab_content_description" id="edit-question-select">
-              <div class="cp_iptxt">
+
+            <div id="group-text-question-answers">
+              <div class="cp_iptxt correct">
                 <label class="ef">
-                  <input type="text" id="text-question-question-select" placeholder="問題文">
+                  <textarea rows="1" wrap="soft" id="text-question-answer-1" placeholder="解答"></textarea>
                 </label>
               </div>
-              <div class="cp_iptxt">
+              <div class="cp_iptxt correct">
                 <label class="ef">
-                  <input type="text" id="text-question-answer-select" placeholder="解答">
+                  <textarea rows="1" wrap="soft" id="text-question-answer-2" placeholder="解答2" class="none"></textarea>
                 </label>
               </div>
-              <div class="cp_iptxt">
+              <div class="cp_iptxt correct">
                 <label class="ef">
-                  <input type="text" id="text-question-other-select-1" placeholder="他の選択肢">
+                  <textarea rows="1" wrap="soft" id="text-question-answer-3" placeholder="解答3" class="none"></textarea>
                 </label>
               </div>
-              <div class="cp_iptxt">
+              <div class="cp_iptxt correct">
                 <label class="ef">
-                  <input type="text" id="text-question-other-select-2" placeholder="他の選択肢">
+                  <textarea rows="1" wrap="soft" id="text-question-answer-4" placeholder="解答4" class="none"></textarea>
                 </label>
               </div>
-              <div class="cp_iptxt">
+              <div class="cp_iptxt correct">
                 <label class="ef">
-                  <input type="text" id="text-question-other-select-3" placeholder="他の選択肢">
+                  <textarea rows="1" wrap="soft" id="text-question-answer-5" placeholder="解答5" class="none"></textarea>
                 </label>
               </div>
-              <div class="cp_iptxt">
+              <div class="cp_iptxt correct">
                 <label class="ef">
-                  <input type="text" id="text-question-other-select-4" placeholder="他の選択肢" class="none">
+                  <textarea rows="1" wrap="soft" id="text-question-answer-6" placeholder="解答6" class="none"></textarea>
                 </label>
               </div>
-              <div class="cp_iptxt">
+            </div>
+
+            <div id="group-text-question-others">
+              <div class="cp_iptxt other">
                 <label class="ef">
-                  <input type="text" id="text-question-other-select-5" placeholder="他の選択肢" class="none">
+                  <textarea rows="1" wrap="soft" id="text-question-other-1" placeholder="他の選択肢" class="none"></textarea>
                 </label>
               </div>
-              <div class="cp_ipselect cp_sl01">
-                <select name="select-select-size" id="select-select-size">
-                  <option value="2">二択問題</option>
-                  <option value="3">三択問題</option>
-                  <option value="4" selected>四択問題</option>
-                  <option value="5">五択問題</option>
-                  <option value="6">六択問題</option>
+              <div class="cp_iptxt other">
+                <label class="ef">
+                  <textarea rows="1" wrap="soft" id="text-question-other-2" placeholder="他の選択肢" class="none"></textarea>
+                </label>
+              </div>
+              <div class="cp_iptxt other">
+                <label class="ef">
+                  <textarea rows="1" wrap="soft" id="text-question-other-3" placeholder="他の選択肢" class="none"></textarea>
+                </label>
+              </div>
+              <div class="cp_iptxt other">
+                <label class="ef">
+                  <textarea rows="1" wrap="soft" id="text-question-other-4" placeholder="他の選択肢" class="none"></textarea>
+                </label>
+              </div>
+              <div class="cp_iptxt other">
+                <label class="ef">
+                  <textarea rows="1" wrap="soft" id="text-question-other-5" placeholder="他の選択肢" class="none"></textarea>
+                </label>
+              </div>
+            </div>
+
+            <div id="group-text-question-explanation" class="cp_iptxt">
+              <label class="ef">
+                <textarea rows="1" wrap="soft" id="text-question-explanation" placeholder="解説" class="none"></textarea>
+              </label>
+            </div>
+
+            <div id="group-image-question" class="none">
+              <div id="image-question" class="clickable" onclick='document.getElementById("files").click();'>
+                画像ファイルを選択
+              </div>
+              <p id="message-image"></p>
+              <input type="file" id="files" class="none"/>
+            </div>
+
+            <button id="save-question" class="btn-flat-border button-menu" type="button">追加して保存</button>
+
+            <details id="detail">
+              <summary>詳細設定</summary>
+
+              <div class="cp_ipcheck" id="check-explanation-layout">
+                <input type="checkbox" id="check-explanation"
+                       onchange='EditorHelper.setIsVisible(document.getElementById("text-question-explanation"),this.checked)'/>
+                <label for="check-explanation">解説文を入れる</label>
+              </div>
+
+              <div class="cp_ipcheck" id="check-image-layout">
+                <input type="checkbox" id="check-image"
+                       onchange='EditorHelper.setIsVisible(document.getElementById("group-image-question"), this.checked);'/>
+                <label for="check-image">画像を添付する</label>
+              </div>
+
+              <div class="cp_ipcheck none" id="check-check-order-layout">
+                <input type="checkbox" id="check-check-order"/>
+                <label for="check-check-order">解答順序を判定に含める</label>
+              </div>
+
+              <div class="cp_ipcheck none" id="check-auto-layout">
+                <input type="checkbox" id="check-auto"/>
+                <label for="check-auto">選択肢の自動生成</label>
+              </div>
+
+              <div class="cp_ipselect cp_sl01 none">
+                <select name="select-complete-select-size" id="select-other-size">
+                  <option value="0">選択肢数 2</option>
+                  <option value="1">選択肢数 3</option>
+                  <option value="2" selected>選択肢数 4</option>
+                  <option value="3">選択肢数 5</option>
+                  <option value="4">選択肢数 6</option>
                 </select>
               </div>
-            </div>
-          </div>
-          <div class="tab_content" id="complete_content">
-            <div class="tab_content_description" id="edit-question-complete">
-              <div class="cp_iptxt">
-                <label class="ef">
-                  <input type="text" id="text-question-question-complete" placeholder="問題文">
-                </label>
-              </div>
-              <div class="cp_iptxt">
-                <label class="ef">
-                  <input type="text" id="text-question-answer-complete-1" placeholder="解答1">
-                </label>
-              </div>
-              <div class="cp_iptxt">
-                <label class="ef">
-                  <input type="text" id="text-question-answer-complete-2" placeholder="解答2">
-                </label>
-              </div>
-              <div class="cp_iptxt">
-                <label class="ef">
-                  <input type="text" id="text-question-answer-complete-3" placeholder="解答3">
-                </label>
-              </div>
-              <div class="cp_iptxt">
-                <label class="ef">
-                  <input type="text" id="text-question-answer-complete-4" placeholder="解答4">
-                </label>
-              </div>
-              <div class="cp_ipselect cp_sl01">
-                <select name="complete-answer-size" id="complete-answer-size">
-                  <option value="2">2</option>
-                  <option value="3">3</option>
-                  <option value="4" selected>4</option>
-                </select>
-              </div>
-            </div>
-          </div>
-          <div class="tab_content" id="select-complete_content">
-            <div class="tab_content_description" id="edit-question-select-complete">
-              <div class="cp_iptxt">
-                <label class="ef">
-                  <input type="text" id="text-question-question-select-complete" placeholder="問題文">
-                </label>
-              </div>
-              <div class="cp_iptxt">
-                <label class="ef">
-                  <input type="text" id="text-question-answer-select-complete-1" placeholder="解答1">
-                </label>
-              </div>
-              <div class="cp_iptxt">
-                <label class="ef">
-                  <input type="text" id="text-question-answer-select-complete-2" placeholder="解答2">
-                </label>
-              </div>
-              <div class="cp_iptxt">
-                <label class="ef">
-                  <input type="text" id="text-question-answer-select-complete-3" placeholder="解答3" class="none">
-                </label>
-              </div>
-              <div class="cp_iptxt">
-                <label class="ef">
-                  <input type="text" id="text-question-answer-select-complete-4" placeholder="解答4" class="none">
-                </label>
-              </div>
-              <div class="cp_iptxt">
-                <label class="ef">
-                  <input type="text" id="text-question-answer-select-complete-5" placeholder="解答5" class="none">
-                </label>
-              </div>
-              <div class="cp_iptxt">
-                <label class="ef">
-                  <input type="text" id="text-question-answer-select-complete-6" placeholder="解答6" class="none">
-                </label>
-              </div>
-              <div class="cp_iptxt">
-                <label class="ef">
-                  <input type="text" id="text-question-other-select-complete-1" placeholder="他の選択肢">
-                </label>
-              </div>
-              <div class="cp_iptxt">
-                <label class="ef">
-                  <input type="text" id="text-question-other-select-complete-2" placeholder="他の選択肢">
-                </label>
-              </div>
-              <div class="cp_iptxt">
-                <label class="ef">
-                  <input type="text" id="text-question-other-select-complete-3" placeholder="他の選択肢" class="none">
-                </label>
-              </div>
-              <div class="cp_iptxt">
-                <label class="ef">
-                  <input type="text" id="text-question-other-select-complete-4" placeholder="他の選択肢" class="none">
-                </label>
-              </div>
-              <div class="cp_iptxt">
-                <label class="ef">
-                  <input type="text" id="text-question-other-select-complete-5" placeholder="他の選択肢" class="none">
-                </label>
-              </div>
-              <div class="cp_iptxt">
-                <label class="ef">
-                  <input type="text" id="text-question-other-select-complete-6" placeholder="他の選択肢" class="none">
-                </label>
-              </div>
-              <div class="cp_ipselect cp_sl01">
+              <div class="cp_ipselect cp_sl01 none">
                 <select name="select-complete-answer-size" id="select-complete-answer-size">
-                  <option value="0">0</option>
-                  <option value="1">1</option>
-                  <option value="2" selected>2</option>
-                  <option value="3">3</option>
-                  <option value="4">4</option>
-                  <option value="5">5</option>
-                  <option value="6">6</option>
+                  <option value="1">解答数　2</option>
+                  <option value="2">解答数　3</option>
+                  <option value="3" selected>解答数　4</option>
                 </select>
               </div>
-              <div class="cp_ipselect cp_sl01">
-                <select name="select-complete-select-size" id="select-complete-select-size">
-                  <option value="2">2</option>
-                  <option value="3">3</option>
-                  <option value="4" selected>4</option>
-                  <option value="5">5</option>
-                  <option value="6">6</option>
+              <div class="cp_ipselect cp_sl01 none">
+                <select name="select-complete-answer-size" id="select-select-complete-answer-size">
+                  <option value="0">解答数　 0</option>
+                  <option value="1">解答数　 1</option>
+                  <option value="2" selected>解答数　 2</option>
+                  <option value="3">解答数　 3</option>
+                  <option value="4">解答数　 4</option>
+                  <option value="5">解答数　 5</option>
+                  <option value="6">解答数　 6</option>
                 </select>
               </div>
-            </div>
+              <div class="cp_ipselect cp_sl01 none">
+                <select name="select-complete-select-size" id="select-answer-other-size">
+                  <option value="1">選択肢数 2</option>
+                  <option value="2">選択肢数 3</option>
+                  <option value="3" selected>選択肢数 4</option>
+                  <option value="4">選択肢数 5</option>
+                  <option value="5">選択肢数 6</option>
+                </select>
+              </div>
+            </details>
           </div>
         </div>
-
-        <button id="save-question" class="btn-flat-border button-menu" type="button">保存</button>
-        <button id="delete-question" class="btn-flat-border button-menu" type="button">削除</button>
-        <button id="cancel-question" class="btn-flat-border button-menu" type="button">破棄</button>
-      </form>
+      </div>
     </div>
   </div>
-
   <div id="tests" class="tests"></div>
-
 </div>
 
 <script src="/__/firebase/6.5.0/firebase-app.js"></script>
 <script src="/__/firebase/6.5.0/firebase-auth.js"></script>
 <script src="/__/firebase/6.5.0/firebase-firestore.js"></script>
+<script src="/__/firebase/6.5.0/firebase-storage.js"></script>
 <script src="/__/firebase/init.js"></script>
 <script src="//unpkg.com/navigo@6"></script>
 
@@ -266,6 +228,7 @@
 <script>window.jQuery || document.write('<script src="js/vendor/jquery-3.4.1.min.js"><\/script>')</script>
 <script src="js/plugins.js"></script>
 <script src="js/Question.js"></script>
+<script src="js/EditorHelper.js"></script>
 <script src="js/main.js"></script>
 
 <!-- Google Analytics: change UA-XXXXX-Y to be your site's ID. -->

@@ -1,93 +1,16 @@
-const Types = {
-  WRITE: 0,
-  SELECT: 1,
-  COMPLETE: 2,
-  SELECT_COMPLETE: 3
-};
-
-
 let currentUser;
 const signOutButton = document.getElementById('logout');
 const saveQuestionButton = document.getElementById('save-question');
 const saveTestButton = document.getElementById('save-test');
 const textTestTitle = document.getElementById('text-test-title');
-const editQuestionForm = document.getElementById('form-question');
-const editTestForm = document.getElementById('form-test');
-const deleteButton = document.getElementById('delete-question');
-const cancelEditQuestionButton = document.getElementById('cancel-question');
-const textQuestion = document.getElementById('text-question-question');
-const textAnswer = document.getElementById('text-question-answer');
-
-
-const formQuestionWriteList = [
-  document.getElementById('text-question-question'),
-  document.getElementById('text-question-answer'),
-];
-
-const formQuestionSelectList = [
-  document.getElementById('text-question-question-select'),
-  document.getElementById('text-question-answer-select'),
-  document.getElementById('text-question-other-select-1'),
-  document.getElementById('text-question-other-select-2'),
-  document.getElementById('text-question-other-select-3'),
-  document.getElementById('text-question-other-select-4'),
-  document.getElementById('text-question-other-select-5')
-];
-const selectSelectSelectSize = document.getElementById('select-select-size');
-
-const formQuestionCompleteList = [
-  document.getElementById('text-question-question-complete'),
-  document.getElementById('text-question-answer-complete-1'),
-  document.getElementById('text-question-answer-complete-2'),
-  document.getElementById('text-question-answer-complete-3'),
-  document.getElementById('text-question-answer-complete-4')
-];
-const selectCompleteAnswerSize = document.getElementById('complete-answer-size');
-
-
-const formQuestionSelectCompleteList = [
-  document.getElementById('text-question-question-select-complete'),
-  document.getElementById('text-question-answer-select-complete-1'),
-  document.getElementById('text-question-answer-select-complete-2'),
-  document.getElementById('text-question-answer-select-complete-3'),
-  document.getElementById('text-question-answer-select-complete-4'),
-  document.getElementById('text-question-answer-select-complete-5'),
-  document.getElementById('text-question-answer-select-complete-6'),
-  document.getElementById('text-question-other-select-complete-1'),
-  document.getElementById('text-question-other-select-complete-2'),
-  document.getElementById('text-question-other-select-complete-3'),
-  document.getElementById('text-question-other-select-complete-4'),
-  document.getElementById('text-question-other-select-complete-5'),
-  document.getElementById('text-question-other-select-complete-6'),
-];
-const selectSelectCompleteAnswerSize = document.getElementById('select-complete-answer-size');
-const selectSelectCompleteSelectSize = document.getElementById('select-complete-select-size');
-
+const imageQuestion = document.getElementById('image-question');
+const fileUploadForm = document.getElementById('files');
+const messageImage = document.getElementById('message-image');
 
 let that;
 let testId = '';
 let size = 0;
 let selectedQuestion = null;
-
-initRouter = function () {
-  this.router = new Navigo();
-
-  that = this;
-  this.router
-    .on({
-      '/': function () {
-        loadTests();
-      }
-    })
-    .on({
-      '/tests/*': function () {
-        let path = document.location.pathname;
-        testId = path.split('/')[2];
-        loadQuestions();
-      }
-    })
-    .resolve();
-};
 
 window.addEventListener('load', function () {
   // Bind Sign in button.
@@ -105,88 +28,108 @@ window.addEventListener('load', function () {
   });
 
   saveQuestionButton.addEventListener('click', function () {
+    if (!validate()) {
+      window.alert("入力されていないフォームがあります");
+      return;
+    }
 
-    let forms = document.getElementById("form-question-tab");
+    if(size > 300){
+      window.alert("一つの問題集につき問題数は300問までにしてください");
+      return;
+    }
 
-    let data = null;
-
+    let forms = document.getElementsByName("tab_item");
     let builder = new QuestionBuilder();
 
-    switch (forms.tab_item.value) {
-      case "write":
-        if (formQuestionWriteList.some(it => it.value === "")) {
-          return;
-        }
-        data = builder
-          .setQuestion(formQuestionWriteList[0].value)
-          .setAnswer(formQuestionWriteList[1].value)
-          .setOrder(size)
-          .build();
+    let data = builder
+      .setQuestion(formQuestionQuestionList[0].value)
+      .setExplanation(formExplanation.value)
+      .setImageRef(EditorHelper.getImageRef());
 
-        break;
-      case "select":
-        if (formQuestionSelectList.some(it => it.value === "")) {
-          return;
+    forms.forEach((it, index) => {
+      if (it.checked) {
+        data = data.setType(index);
+        switch (parseInt(it.value)) {
+          case Types.WRITE:
+            data = data
+              .setAnswer(formQuestionAnswerList[0].value);
+            break;
+          case Types.SELECT:
+            data = data
+              .setAnswer(formQuestionAnswerList[0].value)
+              .setOthers(formQuestionOtherList.filter(it => !it.classList.contains('none')).map(it => it.value))
+              .setAuto(checkAuto.firstElementChild.checked);
+            break;
+          case Types.COMPLETE:
+            data = data
+              .setAnswers(formQuestionAnswerList.filter(it => !it.classList.contains('none')).map(it => it.value))
+              .setCheckOrder(checkCheckOrder.firstElementChild.checked);
+            break;
+          case  Types.SELECT_COMPLETE:
+            data = data
+              .setAnswers(formQuestionAnswerList.filter(it => !it.classList.contains('none')).map(it => it.value))
+              .setOthers(formQuestionOtherList.filter(it => !it.classList.contains('none')).map(it => it.value))
+              .setAuto(checkAuto.firstElementChild.checked);
+            break;
         }
-        data = builder
-          .setQuestion(formQuestionSelectList[0].value)
-          .setAnswer(formQuestionSelectList[1].value)
-          .setOrder(size)
-          .build();
+      }
+    });
 
-        break;
-      case "complete":
-        if (formQuestionCompleteList.some(it => it.value === "")) {
-          return;
-        }
-        break;
-      case  "select-complete":
-        if (formQuestionSelectCompleteList.some(it => it.value === "")) {
-          return;
-        }
-        break;
-    }
+    clearFormQuestion();
+    formQuestionQuestionList[0].focus();
 
     if (selectedQuestion !== null) {
-      saveQuestion(data);
+      data = data.setOrder(selectedQuestion.data().order);
+      saveQuestion(data.build());
     } else {
-      addQuestion(data);
+      data = data.setOrder(size);
+      addQuestion(data.build());
     }
+
+    console.log(data.build());
   });
 
-  selectSelectSelectSize.addEventListener('change',function() {
-    formQuestionSelectList.forEach((value, index) => {
-      if (selectSelectSelectSize.value < index) {
-        formQuestionSelectList[index].style.display = "none";
-      }else{
-        formQuestionSelectList[index].style.display = "block";
+  $('input[name="tab_item"]:radio').change(function () {
+    EditorHelper.setType(parseInt($(this).val()));
+  });
+
+  selectOtherSize.addEventListener('change', function () {
+    formQuestionOtherList.forEach((it, index) => {
+      if (index > (parseInt(selectOtherSize.value))) {
+        it.classList.add("none");
+      } else {
+        it.classList.remove("none")
       }
     });
   });
 
-  selectCompleteAnswerSize.addEventListener('change',function() {
-    formQuestionCompleteList.forEach((value, index) => {
-      if (selectCompleteAnswerSize.value < index) {
-        formQuestionCompleteList[index].style.display = "none";
-      }else{
-        formQuestionCompleteList[index].style.display = "block";
+  selectCompleteAnswerSize.addEventListener('change', function () {
+    formQuestionAnswerList.forEach((it, index) => {
+      if (index > (parseInt(selectCompleteAnswerSize.value))) {
+        it.classList.add("none");
+      } else {
+        it.classList.remove("none")
       }
     });
   });
 
-  selectSelectCompleteAnswerSize.addEventListener('change',function() {
-    reloadSelectCompleteForm()
+  selectSelectCompleteAnswerSize.addEventListener('change', function () {
+    reloadSelectCompleteForm();
   });
 
-  selectSelectCompleteSelectSize.addEventListener('change',function() {
-    reloadSelectCompleteForm()
+  selectAnswerAndOtherSize.addEventListener('change', function () {
+    reloadSelectCompleteForm();
   });
 
-  deleteButton.addEventListener('click', function () {
-    deleteQuestion();
+  checkAuto.addEventListener('change', function () {
+    EditorHelper.setAuto(checkAuto.firstElementChild.checked);
   });
 
-  cancelEditQuestionButton.addEventListener('click', function () {
+  fileUploadForm.addEventListener('change', function (e) {
+    loadImageFile(e);
+  });
+
+  cancelEditButton.addEventListener('click', function () {
     clearFormQuestion();
   });
 
@@ -203,7 +146,6 @@ function onAuthStateChanged(user) {
 
   if (user) {
     currentUser = user;
-    initRouter();
     loadTests();
   } else {
     // Set currentUID to null.
@@ -219,23 +161,39 @@ function loadTests() {
   document.getElementById('tests').innerHTML = '<p class="loading">読み込み中です</p>';
 
   let stockList = '';
-  editTestForm.style.display = "block";
-  editQuestionForm.style.display = "none";
+  $("#form-test").removeClass("none");
+  $("#form-question").addClass("none");
   firebase.firestore().collection("tests").limit(50).where('userId', '==', currentUser.uid).get().then((querySnapshot) => {
     querySnapshot.forEach((doc) => {
-      stockList += '<a href="#" class="clickable" id=' + doc.id + '><li class="test">' + doc.data().name + '</li></a>';
+      stockList +=
+        '<div class="card-test">' +
+        '<a href="#" class="clickable" id=' + doc.id + '>' +
+        '<div class="test">' + doc.data().name + '</div>' +
+        '</a>' +
+        '<button class="delete-test btn-rect-border" type="button">削除</button>' +
+        '</div>\n';
     });
     document.getElementById('tests').innerHTML = stockList;
     document.getElementById('tests').className = 'tests';
-    let tests = document.getElementById("tests").children;
+    let tests = document.getElementById("tests").getElementsByClassName("clickable");
 
     if (stockList === '') {
       document.getElementById('tests').innerHTML = '<p class="loading">登録している問題集はありません</p>';
     }
 
+    let deleteButtons = Array.from(document.getElementById("tests").getElementsByClassName("delete-test"));
+    deleteButtons.forEach((it, index) => {
+      it.addEventListener('click', function () {
+        if (window.confirm('問題集 ' + querySnapshot.docs[index].data().name + 'を削除しますか？')) {
+          deleteTest(querySnapshot.docs[index].id);
+        }
+      });
+    });
+
     for (let i = 0; i < tests.length; i++) {
       tests[i].addEventListener('click', function () {
-        that.router.navigate('/tests/' + tests[i].id);
+        testId = tests[i].id;
+        loadQuestions();
       });
     }
   });
@@ -246,28 +204,78 @@ function loadQuestions() {
   document.getElementById('tests').innerHTML = '<p class="loading">読み込み中です</p>';
 
   let stockList = '';
-  editTestForm.style.display = "none";
-  editQuestionForm.style.display = "block";
+  $("#form-test").addClass("none");
+  $("#form-question").removeClass("none");
   firebase.firestore().collection("tests").doc(testId).collection("questions").limit(300).orderBy("order").get().then((querySnapshot) => {
 
     querySnapshot.forEach((doc) => {
-      stockList += '<a href="#" class="clickable" id=' + doc.id + '><div class="question">' + doc.data().question + '<br>' + doc.data().answer + '</div></a>';
+      stockList +=
+        '<div class="card-question">' +
+        '<a href="#" class="clickable" id=' + doc.id + '>' +
+        '<div class="question"><p class="single">' + doc.data().question + '</p><p class="single">' + doc.data().answer + '</p></div>' +
+        '</a>' +
+        '<button class="delete-question btn-rect-border" type="button">削除</button>' +
+        '</div>\n';
     });
-    document.getElementById('tests').innerHTML = stockList;
-    document.getElementById('tests').className = 'questions';
-    let questions = document.getElementById("tests").children;
-    size = questions.length;
 
     if (stockList === '') {
       document.getElementById('tests').innerHTML = '<p class="loading">登録している問題はありません</p>';
+    } else {
+      document.getElementById('tests').innerHTML = stockList;
     }
+
+    document.getElementById('tests').className = 'questions';
+    let questions = document.getElementById("tests").getElementsByClassName("clickable");
+    size = questions.length;
+
+    let deleteButtons = Array.from(document.getElementById("tests").getElementsByClassName("delete-question"));
+    deleteButtons.forEach((it, index) => {
+      it.addEventListener('click', function () {
+        if (window.confirm('問題 ' + querySnapshot.docs[index].data().question + 'を削除しますか？')) {
+          deleteQuestion(querySnapshot.docs[index].id);
+        }
+      });
+    });
 
     for (let i = 0; i < questions.length; i++) {
       questions[i].addEventListener('click', function () {
+        saveQuestionButton.textContent = "上書きして保存";
         window.scrollTo(0, 0);
+
         selectedQuestion = querySnapshot.docs[i];
-        textQuestion.value = querySnapshot.docs[i].data().question;
-        textAnswer.value = querySnapshot.docs[i].data().answer;
+        let data = querySnapshot.docs[i].data();
+
+        EditorHelper
+          .setIsVisibleCancelEditButton(true)
+          .setQuestion(data.question)
+          .setExplanation(data.explanation)
+          .setType(data.type);
+
+        $('input[name="tab_item"]:radio')[data.type].checked = true;
+
+        switch (data.type) {
+          case Types.WRITE:
+            EditorHelper
+              .setAnswer(data.answer);
+            break;
+          case Types.SELECT:
+            EditorHelper
+              .setAnswer(data.answer)
+              .setOthers(data.others)
+              .setAuto(data.auto);
+            break;
+          case Types.COMPLETE:
+            EditorHelper
+              .setAnswers(data.answers)
+              .setCheckOrder(data.checkOrder);
+            break;
+          case Types.SELECT_COMPLETE:
+            EditorHelper
+              .setAnswers(data.answers)
+              .setOthers(data.others)
+              .setAuto(data.auto);
+            break;
+        }
       });
     }
   }).catch(function (error) {
@@ -280,7 +288,6 @@ function addQuestion(data) {
     data.getObject()
   ).then(function () {
     loadQuestions();
-    clearFormQuestion();
   }).catch(function (error) {
     console.error("Error adding document: ", error);
   });
@@ -291,6 +298,15 @@ function saveQuestion(data) {
     data.getObject()
   ).then(function () {
     loadQuestions();
+    selectedQuestion = null;
+  }).catch(function (error) {
+    console.error("Error adding document: ", error);
+  });
+}
+
+function deleteQuestion(id) {
+  firebase.firestore().collection("tests").doc(testId).collection("questions").doc(id).delete().then(function () {
+    loadQuestions();
     clearFormQuestion();
     selectedQuestion = null;
   }).catch(function (error) {
@@ -298,11 +314,9 @@ function saveQuestion(data) {
   });
 }
 
-function deleteQuestion() {
-  firebase.firestore().collection("tests").doc(testId).collection("questions").doc(selectedQuestion.id).delete().then(function () {
-    loadQuestions();
-    clearFormQuestion();
-    selectedQuestion = null;
+function deleteTest(id) {
+  firebase.firestore().collection("tests").doc(id).delete().then(function () {
+    loadTests();
   }).catch(function (error) {
     console.error("Error adding document: ", error);
   });
@@ -328,30 +342,64 @@ function saveTest() {
 }
 
 function clearFormQuestion() {
-  textQuestion.value = "";
-  textAnswer.value = "";
+  EditorHelper.clear();
   selectedQuestion = null;
 }
+
 function reloadSelectCompleteForm() {
-  formQuestionSelectCompleteList.forEach((value, index) => {
-    if(index > 6){
-      return;
-    }
-    if (selectSelectCompleteAnswerSize.value < index) {
-      formQuestionSelectCompleteList[index].style.display = "none";
-    }else{
-      formQuestionSelectCompleteList[index].style.display = "block";
+  formQuestionAnswerList.forEach((it, index) => {
+    if (index >= (parseInt(selectSelectCompleteAnswerSize.value))) {
+      it.classList.add("none");
+    } else {
+      it.classList.remove("none")
     }
   });
-  formQuestionSelectCompleteList.forEach((value, index) => {
-    if(index <= 6){
-      return;
-    }
-    if (selectSelectCompleteSelectSize.value - selectSelectCompleteAnswerSize.value < (index - 6)) {
-      formQuestionSelectCompleteList[index].style.display = "none";
-    }else{
-      formQuestionSelectCompleteList[index].style.display = "block";
+  formQuestionOtherList.forEach((it, index) => {
+    if (index > (parseInt(selectAnswerAndOtherSize.value) - parseInt(selectSelectCompleteAnswerSize.value))) {
+      it.classList.add("none");
+    } else {
+      it.classList.remove("none")
     }
   });
+}
+
+function validate() {
+  if (formQuestionQuestionList.some(it => it.value === "")) {
+    return false;
+  }
+  if (Array.from($("#group-text-question-answers")).some(it => it.value === "" && !it.classList.contains("none"))) {
+    return false;
+  }
+  if (Array.from($("#group-text-question-others")).some(it => it.value === "" && !it.classList.contains("none")) &&
+    [Types.SELECT, Types.SELECT_COMPLETE].includes($("#form-question-tab").tab_item.value)) {
+    return false;
+  }
+  return true;
+}
+
+function loadImageFile(e) {
+  messageImage.textContent = "アップロード中";
+
+  imageQuestion.textContent = e.target.value.split("\\").slice(-1)[0].substr(0, 30);
+  let file = e.target.files[0]; // FileList object
+
+  if(file === undefined){
+    imageQuestion.textContent = "画像ファイルを選択";
+    EditorHelper.setImageRef("");
+    messageImage.textContent = "";
+  }
+
+  if (file.size > 1000000) {
+    messageImage.textContent = "ファイルサイズは1MB以下にしてください";
+  }else{
+    let path = currentUser.uid + '/' + new Date().getTime();
+
+    let imageRef = firebase.storage().ref().child(path);
+    EditorHelper.setImageRef(path);
+
+    imageRef.put(file, {contentType: 'image/jpeg'}).then(function () {
+      messageImage.textContent = "アップロード完了";
+    });
+  }
 }
 

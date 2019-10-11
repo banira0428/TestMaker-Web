@@ -93,6 +93,7 @@ QuestionBuilder.prototype = {
   },
   setAnswers(answers){
     this.question.answers = answers;
+    this.question.answer = answers.join(' ');
     return this;
   },
   setType(type){
