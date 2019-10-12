@@ -14,6 +14,7 @@
   <link rel="stylesheet" href="css/normalize.css" type="text/css">
   <link rel="stylesheet" href="css/main.css" type="text/css">
   <link rel="stylesheet" href="css/styles.css" type="text/css">
+  <link rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/3.5.2/firebaseui.css" type="text/css"/>
 
   <meta name="theme-color" content="#2CACE1">
 </head>
@@ -32,7 +33,7 @@
 
 <div id="content-login" class="none">
   <h2>このサービスを利用するにはログインが必要です</h2>
-  <button id="login" class="btn-flat-border button-menu" onclick="login()">ログイン</button>
+  <div id="firebaseui-auth-container"></div>
 </div>
 
 <div class="content">
@@ -245,7 +246,9 @@
   </div>
 </div>
 
+
 <script src="/__/firebase/6.5.0/firebase-app.js"></script>
+<script src="https://cdn.firebase.com/libs/firebaseui/3.5.2/firebaseui.js"></script>
 <script src="/__/firebase/6.5.0/firebase-auth.js"></script>
 <script src="/__/firebase/6.5.0/firebase-firestore.js"></script>
 <script src="/__/firebase/6.5.0/firebase-storage.js"></script>

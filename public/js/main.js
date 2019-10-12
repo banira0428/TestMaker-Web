@@ -14,6 +14,8 @@ let testId = '';
 let size = 0;
 let selectedQuestion = null;
 
+let ui = new firebaseui.auth.AuthUI(firebase.auth());
+
 window.addEventListener('load', function () {
 
   signOutButton.addEventListener('click', function () {
@@ -153,13 +155,14 @@ function onAuthStateChanged(user) {
     mainContent.classList.add("none");
     signOutButton.classList.add("none");
 
-    // Display the splash page where you can sign-in.
+    ui.start('#firebaseui-auth-container', {
+      signInOptions: [
+        firebase.auth.EmailAuthProvider.PROVIDER_ID,
+        firebase.auth.GoogleAuthProvider.PROVIDER_ID,
+      ],
+      // Other config options...
+    });
   }
-}
-
-function login(){
-  let provider = new firebase.auth.GoogleAuthProvider();
-  firebase.auth().signInWithPopup(provider);
 }
 
 function loadTests() {
