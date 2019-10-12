@@ -4,6 +4,7 @@
 
 .DS_Store
 .firebase/
+.node_modules/
 .firebaserc
 .idea/
 firebase-debug.log
