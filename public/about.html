@@ -18,9 +18,15 @@
 </head>
 <body>
 
-<div id="header">
-  <h1 id="title"><a href="/">暗記メーカー α版</a></h1>　　　<a href="about.html">このサイトについて</a>
-</div>
+<header id="top-head">
+  <h2 class="title"><a href="/">暗記メーカー α版</a></h2>
+  <a href="#" class="menu-mobile" id="toggle-menu">メニュー</a>
+  <ul>
+    <li><a href="/">ホーム</a></li>
+    <li><a href="about.html">このサイトについて</a></li>
+    <li><a href="#" id="logout">ログアウト</a></li>
+  </ul>
+</header>
 
 <div id="content-about">
   <h2>このサイトについて</h2>
@@ -31,5 +37,10 @@
   <p>不具合の報告，追加機能の要望等は<a href="https://twitter.com/keita_developer" target="_blank">開発者</a>にご連絡ください</p>
 </div>
 
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+<script>window.jQuery || document.write('<script src="js/vendor/jquery-3.4.1.min.js"><\/script>')</script>
+<script src="js/plugins.js"></script>
+<script src="js/header.js"></script>
 </body>
 </html>

@@ -1,27 +1,4 @@
-#header {
-  background-color: #2CACE1;
-  height: 64px;
-  width: 100%;
-  margin-top: 0;
-  padding: 2vh 0 0 2vh;
-  color: white;
-}
-
-#title {
-  margin-top: auto;
-  margin-bottom: auto;
-  display: inline;
-  text-align: left;
-  color: white;
-}
-
-#logout {
-  margin-top: auto;
-  margin-bottom: auto;
-  display: inline;
-  margin-right: 36px;
-  float: right;
-}
+@import url("header.css");
 
 .btn-flat-border {
   display: inline-block;
@@ -153,11 +130,6 @@
 
 .clickable {
   text-decoration: none;
-}
-
-#header a:-webkit-any-link {
-  text-decoration: none;
-  color: white;
 }
 
 .cp_iptxt {
