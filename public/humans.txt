@@ -3,11 +3,11 @@
 
 # TEAM
 
-    <name> -- <role> -- <twitter>
-
-# THANKS
-
-    <name>
+    Owner,
+    Developer,
+    Publisher: Keita Yamada
+    Location Okayama, Japan
+    Twitter: https://twitter.com/keita_developer
 
 # TECHNOLOGY COLOPHON
 
