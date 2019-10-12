@@ -1,0 +1,19 @@
+{
+  "name": "testmaker-web",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/banira0428/TestMaker-Web.git"
+  },
+  "author": "Keita Yamada",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/banira0428/TestMaker-Web/issues"
+  },
+  "homepage": "https://github.com/banira0428/TestMaker-Web#readme"
+}
