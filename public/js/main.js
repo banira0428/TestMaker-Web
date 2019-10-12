@@ -6,6 +6,9 @@ const textTestTitle = document.getElementById('text-test-title');
 const imageQuestion = document.getElementById('image-question');
 const fileUploadForm = document.getElementById('files');
 const messageImage = document.getElementById('message-image');
+const mainContent = document.getElementById('content');
+const loginContent = document.getElementById('content-login');
+
 
 let that;
 let testId = '';
@@ -13,11 +16,6 @@ let size = 0;
 let selectedQuestion = null;
 
 window.addEventListener('load', function () {
-  // Bind Sign in button.
-  // if(currentUID === ""){
-  //   let provider = new firebase.auth.GoogleAuthProvider();
-  //   firebase.auth().signInWithPopup(provider);
-  // }
 
   signOutButton.addEventListener('click', function () {
     firebase.auth().signOut();
@@ -33,7 +31,7 @@ window.addEventListener('load', function () {
       return;
     }
 
-    if(size > 300){
+    if (size > 300) {
       window.alert("一つの問題集につき問題数は300問までにしてください");
       return;
     }
@@ -85,8 +83,6 @@ window.addEventListener('load', function () {
       data = data.setOrder(size);
       addQuestion(data.build());
     }
-
-    console.log(data.build());
   });
 
   $('input[name="tab_item"]:radio').change(function () {
@@ -146,14 +142,25 @@ function onAuthStateChanged(user) {
 
   if (user) {
     currentUser = user;
+    loginContent.classList.add("none");
+    mainContent.classList.remove("none");
+    signOutButton.classList.remove("none");
+
     loadTests();
   } else {
     // Set currentUID to null.
-    let provider = new firebase.auth.GoogleAuthProvider();
-    firebase.auth().signInWithPopup(provider);
     currentUser = null;
+    loginContent.classList.remove("none");
+    mainContent.classList.add("none");
+    signOutButton.classList.add("none");
+
     // Display the splash page where you can sign-in.
   }
+}
+
+function login(){
+  let provider = new firebase.auth.GoogleAuthProvider();
+  firebase.auth().signInWithPopup(provider);
 }
 
 function loadTests() {
@@ -287,6 +294,9 @@ function addQuestion(data) {
   firebase.firestore().collection("tests").doc(testId).collection("questions").add(
     data.getObject()
   ).then(function () {
+    firebase.firestore().collection("tests").doc(testId).update({
+      size: size + 1,
+    });
     loadQuestions();
   }).catch(function (error) {
     console.error("Error adding document: ", error);
@@ -299,6 +309,7 @@ function saveQuestion(data) {
   ).then(function () {
     loadQuestions();
     selectedQuestion = null;
+
   }).catch(function (error) {
     console.error("Error adding document: ", error);
   });
@@ -306,6 +317,9 @@ function saveQuestion(data) {
 
 function deleteQuestion(id) {
   firebase.firestore().collection("tests").doc(testId).collection("questions").doc(id).delete().then(function () {
+    firebase.firestore().collection("tests").doc(testId).update({
+      size: size - 1,
+    });
     loadQuestions();
     clearFormQuestion();
     selectedQuestion = null;
@@ -383,7 +397,7 @@ function loadImageFile(e) {
   imageQuestion.textContent = e.target.value.split("\\").slice(-1)[0].substr(0, 30);
   let file = e.target.files[0]; // FileList object
 
-  if(file === undefined){
+  if (file === undefined) {
     imageQuestion.textContent = "画像ファイルを選択";
     EditorHelper.setImageRef("");
     messageImage.textContent = "";
@@ -391,7 +405,7 @@ function loadImageFile(e) {
 
   if (file.size > 1000000) {
     messageImage.textContent = "ファイルサイズは1MB以下にしてください";
-  }else{
+  } else {
     let path = currentUser.uid + '/' + new Date().getTime();
 
     let imageRef = firebase.storage().ref().child(path);
