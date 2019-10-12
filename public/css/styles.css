@@ -1,26 +1,31 @@
-#header {
+header{
   background-color: #2CACE1;
-  height: 64px;
   width: 100%;
-  margin-top: 0;
-  padding: 2vh 0 0 2vh;
+  height: 72px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+header .title{
+  float: left;
+  line-height: 72px;
+  margin: 0 0 0 16px;
+}
+
+header a:-webkit-any-link {
+  text-decoration: none;
   color: white;
 }
 
-#title {
-  margin-top: auto;
-  margin-bottom: auto;
-  display: inline;
-  text-align: left;
-  color: white;
-}
-
-#logout {
-  margin-top: auto;
-  margin-bottom: auto;
-  display: inline;
-  margin-right: 36px;
+header ul {
   float: right;
+  line-height: 72px;
+  margin: 0;
+  padding: 0;
+}
+
+header ul li{
+  display: inline-block;
+  margin-right: 30px;
 }
 
 .btn-flat-border {
@@ -153,11 +158,6 @@
 
 .clickable {
   text-decoration: none;
-}
-
-#header a:-webkit-any-link {
-  text-decoration: none;
-  color: white;
 }
 
 .cp_iptxt {
