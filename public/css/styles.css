@@ -1,5 +1,17 @@
 @import url("header.css");
 
+.content {
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
+}
+
+@media screen and (max-width: 1200px) {
+  .content {
+    width: 90%;
+  }
+}
+
 .btn-flat-border {
   display: inline-block;
   padding: 0.3em 1em;
@@ -167,12 +179,6 @@
 .button-menu {
   width: 100%;
   line-height: 2;
-}
-
-#content {
-  margin-left: auto;
-  margin-right: auto;
-  width: 50%;
 }
 
 #content-login {
@@ -393,11 +399,10 @@ input[name="tab_item"] {
   margin-bottom: auto;
 }
 
-#content-about {
+.content-about {
   margin-top: 12px;
   margin-left: auto;
   margin-right: auto;
-  width: 50%;
   background: white;
   padding: 0.6em;
   border-radius: 5px;
