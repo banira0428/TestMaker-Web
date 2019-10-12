@@ -8,6 +8,5 @@ node_modules/
 .firebaserc
 .idea/
 firebase-debug.log
-firebase.json
 public/.DS_Store
 
