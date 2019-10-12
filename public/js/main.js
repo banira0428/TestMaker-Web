@@ -14,6 +14,8 @@ let testId = '';
 let size = 0;
 let selectedQuestion = null;
 
+let ui = new firebaseui.auth.AuthUI(firebase.auth());
+
 window.addEventListener('load', function () {
 
   signOutButton.addEventListener('click', function () {
@@ -21,6 +23,11 @@ window.addEventListener('load', function () {
   });
 
   saveTestButton.addEventListener('click', function () {
+    if (textTestTitle.value === "") {
+      window.alert("入力されていないフォームがあります");
+      return;
+    }
+
     saveTest();
   });
 
@@ -153,13 +160,14 @@ function onAuthStateChanged(user) {
     mainContent.classList.add("none");
     signOutButton.classList.add("none");
 
-    // Display the splash page where you can sign-in.
+    ui.start('#firebaseui-auth-container', {
+      signInOptions: [
+        firebase.auth.EmailAuthProvider.PROVIDER_ID,
+        firebase.auth.GoogleAuthProvider.PROVIDER_ID,
+      ],
+      // Other config options...
+    });
   }
-}
-
-function login(){
-  let provider = new firebase.auth.GoogleAuthProvider();
-  firebase.auth().signInWithPopup(provider);
 }
 
 function loadTests() {
@@ -172,16 +180,17 @@ function loadTests() {
   firebase.firestore().collection("tests").limit(50).where('userId', '==', currentUser.uid).get().then((querySnapshot) => {
     querySnapshot.forEach((doc) => {
       stockList +=
-        '<div class="card-test">' +
-        '<a href="#" class="clickable" id=' + doc.id + '>' +
+        '<div class="card clickable">' +
+        '<div class="card-content">' +
+        '<a href="#" class="test-name deco-none" id=' + doc.id + '>' +
         '<div class="test">' + doc.data().name + '</div>' +
         '</a>' +
         '<button class="delete-test btn-rect-border" type="button">削除</button>' +
-        '</div>\n';
+        '</div></div>\n';
     });
     document.getElementById('tests').innerHTML = stockList;
     document.getElementById('tests').className = 'tests';
-    let tests = document.getElementById("tests").getElementsByClassName("clickable");
+    let tests = document.getElementById("tests").getElementsByClassName("test-name");
 
     if (stockList === '') {
       document.getElementById('tests').innerHTML = '<p class="loading">登録している問題集はありません</p>';
@@ -216,12 +225,13 @@ function loadQuestions() {
 
     querySnapshot.forEach((doc) => {
       stockList +=
-        '<div class="card-question">' +
+        '<div class="card clickable">' +
+        '<div class="card-content">' +
         '<a href="#" class="clickable" id=' + doc.id + '>' +
         '<div class="question"><p class="single">' + doc.data().question + '</p><p class="single">' + doc.data().answer + '</p></div>' +
         '</a>' +
         '<button class="delete-question btn-rect-border" type="button">削除</button>' +
-        '</div>\n';
+        '</div></div>\n';
     });
 
     if (stockList === '') {

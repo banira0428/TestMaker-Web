@@ -14,6 +14,7 @@
   <link rel="stylesheet" href="css/normalize.css" type="text/css">
   <link rel="stylesheet" href="css/main.css" type="text/css">
   <link rel="stylesheet" href="css/styles.css" type="text/css">
+  <link rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/3.5.2/firebaseui.css" type="text/css"/>
 
   <meta name="theme-color" content="#2CACE1">
 </head>
@@ -26,226 +27,236 @@
   <ul>
     <li><a href="/">ホーム</a></li>
     <li><a href="about.html">このサイトについて</a></li>
-    <li><a href="#" id="logout">ログアウト</a></li>
+    <li><a href="#" id="logout" class="none">ログアウト</a></li>
   </ul>
 </header>
 
-<div id="content-login" class="none">
-  <h2>このサービスを利用するにはログインが必要です</h2>
-  <button id="login" class="btn-flat-border button-menu" onclick="login()">ログイン</button>
-</div>
 
 <div class="content">
-  <div id="content">
+
+  <div id="content-login" class="none">
+    <div class="card">
+      <div class="card-content center">
+        <h2>このサービスを利用するにはログインが必要です</h2>
+        <div id="firebaseui-auth-container"></div>
+      </div>
+    </div>
+  </div>
+
+  <div id="content" class="none">
     <div id="form-test">
-      <div class="card-form">
-        <form method="post">
-          <div class="cp_iptxt">
+      <div class="card">
+        <div class="card-content">
+          <div class="area">
             <label class="ef">
               <textarea rows="1" wrap="soft" id="text-test-title" placeholder="新しい問題集のタイトル"></textarea>
             </label>
           </div>
-          <button id="save-test" class="btn-flat-border button-menu" type="button">追加して保存</button>
-        </form>
+          <button id="save-test" class="btn wide" type="button">追加して保存</button>
+        </div>
       </div>
     </div>
 
     <div id="form-question" class="none">
-      <div class="card-form">
+      <div class="card">
+        <div class="card-content">
 
-        <div id="form-header">
-          <p id="form-header-title">問題の編集</p>
-          <button id="cancel-question" class="btn-flat-border none" type="button">編集内容の破棄</button>
-        </div>
+          <div id="form-header">
+            <p id="form-header-title">問題の編集</p>
+            <button id="cancel-question" class="btn none" type="button">編集内容の破棄</button>
+          </div>
 
-        <div id="form-question-tab">
-          <div class="tabs">
-            <input id="write" type="radio" name="tab_item" value="0" checked>
-            <label class="tab_item" for="write">記述</label>
-            <input id="select" type="radio" name="tab_item" value="1">
-            <label class="tab_item" for="select">選択</label>
-            <input id="complete" type="radio" name="tab_item" value="2">
-            <label class="tab_item" for="complete">完答</label>
-            <input id="select-complete" type="radio" name="tab_item" value="3">
-            <label class="tab_item" for="select-complete">選択完答</label>
-            <div class="tab_content">
+          <div id="form-question-tab">
+            <div class="tabs">
+              <input id="write" type="radio" name="tab_item" value="0" checked>
+              <label class="tab_item" for="write">記述</label>
+              <input id="select" type="radio" name="tab_item" value="1">
+              <label class="tab_item" for="select">選択</label>
+              <input id="complete" type="radio" name="tab_item" value="2">
+              <label class="tab_item" for="complete">完答</label>
+              <input id="select-complete" type="radio" name="tab_item" value="3">
+              <label class="tab_item" for="select-complete">選択完答</label>
+              <div class="tab_content">
 
-              <div id="group-text-question-question">
-                <div class="cp_iptxt">
-                  <label class="ef">
-                    <textarea rows="1" wrap="soft" id="text-question-question" placeholder="問題文"></textarea>
-                  </label>
+                <div id="group-text-question-question">
+                  <div class="area">
+                    <label class="ef">
+                      <textarea rows="1" wrap="soft" id="text-question-question" placeholder="問題文"></textarea>
+                    </label>
+                  </div>
                 </div>
-              </div>
 
-              <div id="group-text-question-answers">
-                <div class="cp_iptxt correct">
-                  <label class="ef">
-                    <textarea rows="1" wrap="soft" id="text-question-answer-1" placeholder="解答"></textarea>
-                  </label>
-                </div>
-                <div class="cp_iptxt correct">
-                  <label class="ef">
+                <div id="group-text-question-answers">
+                  <div class="area correct">
+                    <label class="ef">
+                      <textarea rows="1" wrap="soft" id="text-question-answer-1" placeholder="解答"></textarea>
+                    </label>
+                  </div>
+                  <div class="area correct">
+                    <label class="ef">
                     <textarea rows="1" wrap="soft" id="text-question-answer-2" placeholder="解答2"
                               class="none"></textarea>
-                  </label>
-                </div>
-                <div class="cp_iptxt correct">
-                  <label class="ef">
+                    </label>
+                  </div>
+                  <div class="area correct">
+                    <label class="ef">
                     <textarea rows="1" wrap="soft" id="text-question-answer-3" placeholder="解答3"
                               class="none"></textarea>
-                  </label>
-                </div>
-                <div class="cp_iptxt correct">
-                  <label class="ef">
+                    </label>
+                  </div>
+                  <div class="area correct">
+                    <label class="ef">
                     <textarea rows="1" wrap="soft" id="text-question-answer-4" placeholder="解答4"
                               class="none"></textarea>
-                  </label>
-                </div>
-                <div class="cp_iptxt correct">
-                  <label class="ef">
+                    </label>
+                  </div>
+                  <div class="area correct">
+                    <label class="ef">
                     <textarea rows="1" wrap="soft" id="text-question-answer-5" placeholder="解答5"
                               class="none"></textarea>
-                  </label>
-                </div>
-                <div class="cp_iptxt correct">
-                  <label class="ef">
+                    </label>
+                  </div>
+                  <div class="area correct">
+                    <label class="ef">
                     <textarea rows="1" wrap="soft" id="text-question-answer-6" placeholder="解答6"
                               class="none"></textarea>
-                  </label>
+                    </label>
+                  </div>
                 </div>
-              </div>
 
-              <div id="group-text-question-others">
-                <div class="cp_iptxt other">
-                  <label class="ef">
+                <div id="group-text-question-others">
+                  <div class="area other">
+                    <label class="ef">
                     <textarea rows="1" wrap="soft" id="text-question-other-1" placeholder="他の選択肢"
                               class="none"></textarea>
-                  </label>
-                </div>
-                <div class="cp_iptxt other">
-                  <label class="ef">
+                    </label>
+                  </div>
+                  <div class="area other">
+                    <label class="ef">
                     <textarea rows="1" wrap="soft" id="text-question-other-2" placeholder="他の選択肢"
                               class="none"></textarea>
-                  </label>
-                </div>
-                <div class="cp_iptxt other">
-                  <label class="ef">
+                    </label>
+                  </div>
+                  <div class="area other">
+                    <label class="ef">
                     <textarea rows="1" wrap="soft" id="text-question-other-3" placeholder="他の選択肢"
                               class="none"></textarea>
-                  </label>
-                </div>
-                <div class="cp_iptxt other">
-                  <label class="ef">
+                    </label>
+                  </div>
+                  <div class="area other">
+                    <label class="ef">
                     <textarea rows="1" wrap="soft" id="text-question-other-4" placeholder="他の選択肢"
                               class="none"></textarea>
-                  </label>
-                </div>
-                <div class="cp_iptxt other">
-                  <label class="ef">
+                    </label>
+                  </div>
+                  <div class="area other">
+                    <label class="ef">
                     <textarea rows="1" wrap="soft" id="text-question-other-5" placeholder="他の選択肢"
                               class="none"></textarea>
-                  </label>
+                    </label>
+                  </div>
                 </div>
-              </div>
 
-              <div id="group-text-question-explanation" class="cp_iptxt">
-                <label class="ef">
+                <div id="group-text-question-explanation" class="area">
+                  <label class="ef">
                   <textarea rows="1" wrap="soft" id="text-question-explanation" placeholder="解説"
                             class="none"></textarea>
-                </label>
+                  </label>
+                </div>
+
+                <div id="group-image-question" class="none">
+                  <div id="image-question" class="clickable" onclick='document.getElementById("files").click();'>
+                    画像ファイルを選択
+                  </div>
+                  <p id="message-image"></p>
+                  <input type="file" id="files" class="none"/>
+                </div>
+
+                <button id="save-question" class="btn wide" type="button">追加して保存</button>
+
+                <details id="detail">
+                  <summary>詳細設定</summary>
+
+                  <div class="check" id="check-explanation-layout">
+                    <input type="checkbox" id="check-explanation"
+                           onchange='EditorHelper.setIsVisible(document.getElementById("text-question-explanation"),this.checked)'/>
+                    <label for="check-explanation">解説文を入れる</label>
+                  </div>
+
+                  <div class="check" id="check-image-layout">
+                    <input type="checkbox" id="check-image"
+                           onchange='EditorHelper.setIsVisible(document.getElementById("group-image-question"), this.checked);'/>
+                    <label for="check-image">画像を添付する</label>
+                  </div>
+
+                  <div class="check none" id="check-check-order-layout">
+                    <input type="checkbox" id="check-check-order"/>
+                    <label for="check-check-order">解答順序を判定に含める</label>
+                  </div>
+
+                  <div class="check none" id="check-auto-layout">
+                    <input type="checkbox" id="check-auto"/>
+                    <label for="check-auto">選択肢の自動生成</label>
+                  </div>
+
+                  <div class="spinner cp_sl01 none">
+                    <select name="select-complete-select-size" id="select-other-size">
+                      <option value="0">選択肢数 2</option>
+                      <option value="1">選択肢数 3</option>
+                      <option value="2" selected>選択肢数 4</option>
+                      <option value="3">選択肢数 5</option>
+                      <option value="4">選択肢数 6</option>
+                    </select>
+                  </div>
+                  <div class="spinner cp_sl01 none">
+                    <select name="select-complete-answer-size" id="select-complete-answer-size">
+                      <option value="1">解答数　2</option>
+                      <option value="2">解答数　3</option>
+                      <option value="3" selected>解答数　4</option>
+                    </select>
+                  </div>
+                  <div class="spinner cp_sl01 none">
+                    <select name="select-complete-answer-size" id="select-select-complete-answer-size">
+                      <option value="0">解答数　 0</option>
+                      <option value="1">解答数　 1</option>
+                      <option value="2" selected>解答数　 2</option>
+                      <option value="3">解答数　 3</option>
+                      <option value="4">解答数　 4</option>
+                      <option value="5">解答数　 5</option>
+                      <option value="6">解答数　 6</option>
+                    </select>
+                  </div>
+                  <div class="spinner cp_sl01 none">
+                    <select name="select-complete-select-size" id="select-answer-other-size">
+                      <option value="1">選択肢数 2</option>
+                      <option value="2">選択肢数 3</option>
+                      <option value="3" selected>選択肢数 4</option>
+                      <option value="4">選択肢数 5</option>
+                      <option value="5">選択肢数 6</option>
+                    </select>
+                  </div>
+                </details>
               </div>
-
-              <div id="group-image-question" class="none">
-                <div id="image-question" class="clickable" onclick='document.getElementById("files").click();'>
-                  画像ファイルを選択
-                </div>
-                <p id="message-image"></p>
-                <input type="file" id="files" class="none"/>
-              </div>
-
-              <button id="save-question" class="btn-flat-border button-menu" type="button">追加して保存</button>
-
-              <details id="detail">
-                <summary>詳細設定</summary>
-
-                <div class="cp_ipcheck" id="check-explanation-layout">
-                  <input type="checkbox" id="check-explanation"
-                         onchange='EditorHelper.setIsVisible(document.getElementById("text-question-explanation"),this.checked)'/>
-                  <label for="check-explanation">解説文を入れる</label>
-                </div>
-
-                <div class="cp_ipcheck" id="check-image-layout">
-                  <input type="checkbox" id="check-image"
-                         onchange='EditorHelper.setIsVisible(document.getElementById("group-image-question"), this.checked);'/>
-                  <label for="check-image">画像を添付する</label>
-                </div>
-
-                <div class="cp_ipcheck none" id="check-check-order-layout">
-                  <input type="checkbox" id="check-check-order"/>
-                  <label for="check-check-order">解答順序を判定に含める</label>
-                </div>
-
-                <div class="cp_ipcheck none" id="check-auto-layout">
-                  <input type="checkbox" id="check-auto"/>
-                  <label for="check-auto">選択肢の自動生成</label>
-                </div>
-
-                <div class="cp_ipselect cp_sl01 none">
-                  <select name="select-complete-select-size" id="select-other-size">
-                    <option value="0">選択肢数 2</option>
-                    <option value="1">選択肢数 3</option>
-                    <option value="2" selected>選択肢数 4</option>
-                    <option value="3">選択肢数 5</option>
-                    <option value="4">選択肢数 6</option>
-                  </select>
-                </div>
-                <div class="cp_ipselect cp_sl01 none">
-                  <select name="select-complete-answer-size" id="select-complete-answer-size">
-                    <option value="1">解答数　2</option>
-                    <option value="2">解答数　3</option>
-                    <option value="3" selected>解答数　4</option>
-                  </select>
-                </div>
-                <div class="cp_ipselect cp_sl01 none">
-                  <select name="select-complete-answer-size" id="select-select-complete-answer-size">
-                    <option value="0">解答数　 0</option>
-                    <option value="1">解答数　 1</option>
-                    <option value="2" selected>解答数　 2</option>
-                    <option value="3">解答数　 3</option>
-                    <option value="4">解答数　 4</option>
-                    <option value="5">解答数　 5</option>
-                    <option value="6">解答数　 6</option>
-                  </select>
-                </div>
-                <div class="cp_ipselect cp_sl01 none">
-                  <select name="select-complete-select-size" id="select-answer-other-size">
-                    <option value="1">選択肢数 2</option>
-                    <option value="2">選択肢数 3</option>
-                    <option value="3" selected>選択肢数 4</option>
-                    <option value="4">選択肢数 5</option>
-                    <option value="5">選択肢数 6</option>
-                  </select>
-                </div>
-              </details>
             </div>
           </div>
         </div>
       </div>
     </div>
 
-    <div id="ad">
-      <a href="https://px.a8.net/svt/ejp?a8mat=35Q274+AEHOAA+3CWI+NV1XD" rel="nofollow">
-        <img border="0" width="320" height="50" alt=""
-             src="https://www25.a8.net/svt/bgt?aid=191012512629&wid=001&eno=01&mid=s00000015669004008000&mc=1"></a>
-      <img border="0" width="1" height="1" src="https://www13.a8.net/0.gif?a8mat=35Q274+AEHOAA+3CWI+NV1XD" alt="">
-    </div>
+    <!--    <div id="ad">-->
+    <!--      <a href="https://px.a8.net/svt/ejp?a8mat=35Q274+AEHOAA+3CWI+NV1XD" rel="nofollow">-->
+    <!--        <img border="0" width="320" height="50" alt=""-->
+    <!--             src="https://www25.a8.net/svt/bgt?aid=191012512629&wid=001&eno=01&mid=s00000015669004008000&mc=1"></a>-->
+    <!--      <img border="0" width="1" height="1" src="https://www13.a8.net/0.gif?a8mat=35Q274+AEHOAA+3CWI+NV1XD" alt="">-->
+    <!--    </div>-->
 
     <div id="tests" class="tests"></div>
   </div>
 </div>
 
+
 <script src="/__/firebase/6.5.0/firebase-app.js"></script>
+<script src="https://cdn.firebase.com/libs/firebaseui/3.5.2/firebaseui.js"></script>
 <script src="/__/firebase/6.5.0/firebase-auth.js"></script>
 <script src="/__/firebase/6.5.0/firebase-firestore.js"></script>
 <script src="/__/firebase/6.5.0/firebase-storage.js"></script>
