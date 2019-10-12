@@ -23,7 +23,7 @@ workflows:
   version: 2.1
   deploy_master:
     jobs:
-      -deploy:
+      - deploy:
         filters:
           branches:
             only: master
