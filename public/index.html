@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <title>暗記メーカー α版</title>
   <meta name="description" content="暗記メーカーのブラウザ版です">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1,minimum-scale=1">
 
   <link rel="manifest" href="site.webmanifest">
   <link rel="apple-touch-icon" href="icon.png">
@@ -20,12 +20,13 @@
 
 <body>
 
-<header>
-  <h1 class="title"><a href="/">暗記メーカー α版</a></h1>
+<header id="top-head">
+  <h2 class="title"><a href="/">暗記メーカー α版</a></h2>
+  <a href="#" class="menu-mobile" id="toggle-menu">メニュー</a>
   <ul>
     <li><a href="/">ホーム</a></li>
     <li><a href="about.html">このサイトについて</a></li>
-    <li><a href="#" id="logout" >ログアウト</a></li>
+    <li><a href="#" id="logout">ログアウト</a></li>
   </ul>
 </header>
 
@@ -245,7 +246,9 @@
 <script src="js/plugins.js"></script>
 <script src="js/Question.js"></script>
 <script src="js/EditorHelper.js"></script>
+<script src="js/header.js"></script>
 <script src="js/main.js"></script>
+
 
 <!-- Google Analytics: change UA-XXXXX-Y to be your site's ID. -->
 <script>

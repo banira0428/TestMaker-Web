@@ -1,32 +1,4 @@
-header{
-  background-color: #2CACE1;
-  width: 100%;
-  height: 72px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-}
-
-header .title{
-  float: left;
-  line-height: 72px;
-  margin: 0 0 0 16px;
-}
-
-header a:-webkit-any-link {
-  text-decoration: none;
-  color: white;
-}
-
-header ul {
-  float: right;
-  line-height: 72px;
-  margin: 0;
-  padding: 0;
-}
-
-header ul li{
-  display: inline-block;
-  margin-right: 30px;
-}
+@import url("header.css");
 
 .btn-flat-border {
   display: inline-block;

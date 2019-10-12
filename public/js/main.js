@@ -9,7 +9,6 @@ const messageImage = document.getElementById('message-image');
 const mainContent = document.getElementById('content');
 const loginContent = document.getElementById('content-login');
 
-
 let that;
 let testId = '';
 let size = 0;
