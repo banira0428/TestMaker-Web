@@ -20,6 +20,7 @@ window.addEventListener('load', function () {
 
   signOutButton.addEventListener('click', function () {
     firebase.auth().signOut();
+    header.classList.toggle("open");
   });
 
   saveTestButton.addEventListener('click', function () {
