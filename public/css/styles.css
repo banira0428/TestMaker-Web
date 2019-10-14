@@ -2,6 +2,7 @@
 @import url("textarea.css");
 @import url("checkbox.css");
 @import url("select.css");
+@import url("loader.css");
 
 .content {
   margin-left: auto;
@@ -11,7 +12,7 @@
 
 @media screen and (max-width: 1200px) {
   .content {
-    width: 90%;
+    width: 95%;
   }
 }
 
@@ -20,7 +21,7 @@
   background: white;
   border-radius: 5px;
   margin: 8px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
 }
 
 .clickable:hover{
@@ -55,6 +56,12 @@
 .btn:hover{
   background: #3551c0;
   border: solid 2px #3551c0;
+}
+
+.btn:disabled{
+  background: #bdbabe;
+  border: solid 2px #bdbabe;
+  cursor: auto;
 }
 
 .btn-rect-border {
@@ -107,6 +114,7 @@
 
 .clickable {
   text-decoration: none;
+  cursor: pointer;
 }
 
 .loading {
