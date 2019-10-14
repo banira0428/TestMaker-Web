@@ -379,6 +379,7 @@
                 this.textImageUploadState = "";
                 this.order = 0;
                 this.imageRef = "";
+                this.imageUrl = "";
             },
 
             validate: function () {
