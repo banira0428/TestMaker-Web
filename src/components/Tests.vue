@@ -6,8 +6,8 @@
                     <div class="card-content">
                         <div class="area">
                             <label class="ef">
-                                    <textarea rows="1" wrap="soft" id="text-test-title" v-model="testName"
-                                              placeholder="新しい問題集のタイトル"></textarea>
+                                    <input type="text" rows="1" wrap="soft" id="text-test-title" v-model="testName"
+                                              placeholder="新しい問題集のタイトル"/>
                             </label>
                         </div>
                         <button id="save-test" class="btn wide" type="button"

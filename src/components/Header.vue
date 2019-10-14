@@ -4,7 +4,7 @@
         <a href="#" class="menu-mobile" id="toggle-menu" v-on:click="isOpen = !isOpen">{{isOpen ? '閉じる' : 'メニュー'}}</a>
         <ul>
             <li><a href="/">ホーム</a></li>
-            <li><a href="#"><router-link to="/about">このサイトについて</router-link></a></li>
+            <li><a href="#" @click="isOpen = false"><router-link to="/about">このサイトについて</router-link></a></li>
             <li><a href="#" @click="signOut" v-if="isSignIn">{{'ログアウト'}}</a></li>
         </ul>
     </header>
@@ -30,6 +30,7 @@
             signOut: function () {
                 if(firebase.auth().currentUser){
                     firebase.auth().signOut().then(() => {
+                        this.isOpen = false;
                         this.$router.push({path: "/signin"});
                     });
                 }

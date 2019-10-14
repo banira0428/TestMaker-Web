@@ -1,4 +1,17 @@
-.area textarea {
+.area textarea{
+  font: 15px/24px sans-serif;
+  box-sizing: border-box;
+  width: 100%;
+  margin-top: 8px;
+  padding: 0.3em;
+  transition: 0.3s;
+  letter-spacing: 1px;
+  line-height: 2;
+  border: 1px solid #1b2538;
+  border-radius: 4px;
+}
+
+.area input[type='text']{
   font: 15px/24px sans-serif;
   box-sizing: border-box;
   width: 100%;
