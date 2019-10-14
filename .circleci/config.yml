@@ -13,6 +13,15 @@ jobs:
           name: npm install
           command: npm i
       - run:
+          name: make env
+          command: touch .env
+      - run:
+          name: write env
+          command: echo VUE_APP_API_KEY=$FIREBASE_API >> .env
+      - run:
+          name: show env
+          command: cat .env
+      - run:
           name: build
           command: npm run build
       - run:
