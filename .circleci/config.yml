@@ -16,11 +16,20 @@ jobs:
           name: make env
           command: touch .env
       - run:
-          name: write env
+          name: write api
           command: echo VUE_APP_API_KEY=$FIREBASE_API >> .env
       - run:
-          name: show env
-          command: cat .env
+          name: write auth domain
+          command: echo VUE_APP_AUTH_DOMAIN=$FIREBASE_AUTH_DOMAIN >> .env
+      - run:
+          name: write database url
+          command: echo VUE_APP_DATABASE_URL=$FIREBASE_DATABASE >> .env
+      - run:
+          name: write project id
+          command: echo VUE_APP_PROJECT_ID=$FIREBASE_PROJECT_ID >> .env
+      - run:
+          name: write storage
+          command: echo VUE_APP_STORAGE_BUCKET=$FIREBASE_STORAGE_BUCKET >> .env
       - run:
           name: build
           command: npm run build
