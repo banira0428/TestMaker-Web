@@ -1,5 +1,11 @@
 <template>
   <div id="form-question">
+    <div class="border-bottom pb-1">
+      <h1 class="h2 d-inline">「{{testName}}」の問題一覧</h1>
+      <b-spinner class="ml-2" variant="primary" label="Spinning" v-if="loading"/>
+    </div>
+
+
     <b-card>
       <b-card-title>
         問題の編集
@@ -109,7 +115,7 @@
                 <input type="file" id="files" ref="imageQuestion" v-show="false" @change="addImage"/>
               </div>
 
-              <b-button block variant="primary" @click="createQuestion()" v-bind:disabled="!validate()">
+              <b-button class="" block variant="primary" @click="createQuestion()" v-bind:disabled="!validate()">
                 {{validate() ? ((questionId !== "") ? '上書き保存' :
                 '追加して保存') : "未入力のフォームがあります"}}
               </b-button>
@@ -206,11 +212,11 @@
     <div class="loader" v-if="loading">Loading...</div>
 
   </div>
-
 </template>
 
 <script>
     import firebase from 'firebase';
+    import store from "../store";
 
     export default {
         name: "Questions",
@@ -227,6 +233,7 @@
                 questionId: "",
                 loading: true,
                 imageUploading: false,
+                testName: "",
                 testId: "",
                 textQuestion: "",
                 textAnswers: [{text: ""}, {text: ""}, {text: ""}, {text: ""}, {text: ""}, {text: ""}],
@@ -249,7 +256,8 @@
             }
         },
         mounted: function () {
-            this.testId = this.$route.params.id;
+            this.testName = store.state.test.name;
+            this.testId = store.state.test.id;
             this.fetchQuestions();
         },
         methods: {

@@ -11,7 +11,7 @@ Vue.use(VueRouter);
 
 const routes = [
   {path: '/', component: Tests},
-  {path: '/questions/:id', component: Questions},
+  {path: '/questions', component: Questions},
   {path: '/signin', component: SignIn, meta: {isPublic: true}},
   {path: '/about', component: About, meta: {isPublic: true}},
   {path: '/terms', component: Terms, meta: {isPublic: true}},

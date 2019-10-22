@@ -5,7 +5,7 @@
         <b-spinner class="ml-2" variant="primary" label="Spinning" v-if="loading"/>
     </div>
 
-    <b-card-group>
+    <b-card-group class="mt-3">
       <b-col md="4">
         <b-card>
           <b-card-title class="single">新しく追加する</b-card-title>
@@ -35,7 +35,7 @@
           <b-card-title class="single">{{test.name}}</b-card-title>
           <b-row>
             <b-col md="7">
-              <b-button block variant="outline-primary" v-on:click="toQuestions(test.id)">編集</b-button>
+              <b-button block variant="outline-primary" v-on:click="toQuestions(test)">編集</b-button>
             </b-col>
             <b-col md="5">
               <b-button block variant="outline-danger" v-on:click="deleteTest(test)">削除</b-button>
@@ -57,6 +57,7 @@
 
 <script>
     import firebase from 'firebase';
+    import store from "../store";
 
     export default {
 
@@ -74,8 +75,9 @@
         },
         methods: {
 
-            toQuestions: function (id) {
-                this.$router.push({path: `/questions/${id}`});
+            toQuestions: function (test) {
+                store.commit('setTest',test);
+                this.$router.push({path: `/questions`});
             },
 
             createTest: function () {

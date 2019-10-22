@@ -4,20 +4,25 @@ import Vuex from 'vuex'
 Vue.use(Vuex);
 
 export default new Vuex.Store({
-    state: {
-        status: false
+  state: {
+    status: false,
+    test: {}
+  },
+  mutations: {
+    onUserStatusChanged(state, status) {
+      state.status = status; //ログインしてるかどうか true or false
     },
-    mutations: {
-        onUserStatusChanged(state, status) {
-            state.status = status; //ログインしてるかどうか true or false
-        }
-    },
-    getters: {
-        isSignedIn(state) {
-            return state.status;
-        }
-    },
-    actions: {
-
+    setTest(state, test) {
+      state.test = test;
     }
+  },
+  getters: {
+    isSignedIn(state) {
+      return state.status;
+    },
+    getTest(state) {
+      return state.test;
+    }
+  },
+  actions: {}
 })
