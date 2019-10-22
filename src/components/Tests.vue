@@ -1,59 +1,56 @@
 <template>
-  <div class="hello">
-    <div id="content">
-      <b-card>
-        <b-form>
-          <b-form-group
-            id="input-group-1"
-            label="問題集のタイトル"
-            label-for="input-1"
-          >
-            <b-form-input
-              id="input-1"
-              v-model="testName"
-              type="text"
-              required
-              placeholder="問題集のタイトル"
-            ></b-form-input>
-          </b-form-group>
+  <div>
+    <div class="border-bottom pb-1">
+        <h1 class="h2 d-inline">問題集一覧</h1>
+        <b-spinner class="ml-2" variant="primary" label="Spinning" v-if="loading"/>
+    </div>
 
-          <b-button block variant="primary" v-on:click="createTest()" v-bind:disabled='testName === ""'>
-            追加して保存
-          </b-button>
-        </b-form>
-      </b-card>
-
-      <div id="ad">
-        <a href="https://px.a8.net/svt/ejp?a8mat=35Q274+AEHOAA+3CWI+NV1XD" rel="nofollow">
-          <img border="0" width="320" height="50" alt=""
-               src="https://www25.a8.net/svt/bgt?aid=191012512629&wid=001&eno=01&mid=s00000015669004008000&mc=1"></a>
-        <img border="0" width="1" height="1" src="https://www13.a8.net/0.gif?a8mat=35Q274+AEHOAA+3CWI+NV1XD"
-             alt="">
-      </div>
-
-      <div v-for="test in tests" v-bind:key="test.id">
+    <b-card-group>
+      <b-col md="4">
         <b-card>
+          <b-card-title class="single">新しく追加する</b-card-title>
+          <b-row class="mt-1">
+            <b-col md="7">
+              <b-form-input
+                class="mt-1"
+                id="input-1"
+                v-model="testName"
+                type="text"
+                required
+                placeholder="問題集のタイトル"
+              ></b-form-input>
+            </b-col>
+            <b-col md="5">
+              <b-button class="mt-1" block variant="outline-primary" v-on:click="createTest()"
+                        v-bind:disabled='testName === ""'>
+                保存
+              </b-button>
+            </b-col>
+          </b-row>
+        </b-card>
+      </b-col>
+
+      <div v-for="test in tests" v-bind:key="test.id" class="col-md-4">
+        <b-card>
+          <b-card-title class="single">{{test.name}}</b-card-title>
           <b-row>
-            <b-col md="8">
-              <b-card-text text-tag="h2">{{test.name}}</b-card-text>
+            <b-col md="7">
+              <b-button block variant="outline-primary" v-on:click="toQuestions(test.id)">編集</b-button>
             </b-col>
-            <b-col md="2">
-              <b-button block variant="primary" v-on:click="toQuestions(test.id)">編集</b-button>
-            </b-col>
-            <b-col md="2">
-              <b-button block variant="danger" v-on:click="deleteTest(test)">削除</b-button>
+            <b-col md="5">
+              <b-button block variant="outline-danger" v-on:click="deleteTest(test)">削除</b-button>
             </b-col>
           </b-row>
         </b-card>
       </div>
+    </b-card-group>
 
-      <b-row>
-        <b-col md="5"></b-col>
-        <b-col md="2">
-          <b-spinner variant="primary" label="Spinning" v-if="loading"/>
-        </b-col>
-        <b-col md="5"></b-col>
-      </b-row>
+    <div id="ad">
+      <a href="https://px.a8.net/svt/ejp?a8mat=35Q274+AEHOAA+3CWI+NV1XD" rel="nofollow">
+        <img border="0" width="320" height="50" alt=""
+             src="https://www25.a8.net/svt/bgt?aid=191012512629&wid=001&eno=01&mid=s00000015669004008000&mc=1"></a>
+      <img border="0" width="1" height="1" src="https://www13.a8.net/0.gif?a8mat=35Q274+AEHOAA+3CWI+NV1XD"
+           alt="">
     </div>
   </div>
 </template>
