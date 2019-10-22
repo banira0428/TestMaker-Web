@@ -1,185 +1,211 @@
 <template>
-    <div id="form-question">
-        <div class="card">
-            <div class="card-content">
+  <div id="form-question">
+    <b-card>
+      <b-card-title>
+        問題の編集
+      </b-card-title>
 
-                <div id="form-header">
-                    <p id="form-header-title">問題の編集</p>
-                    <button id="cancel-question" class="btn" type="button" v-show='questionId !== ""'
-                            @click="clearForm()">編集内容の破棄
-                    </button>
+      <b-button variant="danger" @click="clearForm()" v-show='questionId !== ""'>
+        編集内容の破棄
+      </b-button>
+
+      <b-card-body>
+
+        <div id="form-question-tab">
+          <div class="tabs">
+            <input id="write" type="radio" name="tab_item" value="0" v-bind:checked="type === Types.WRITE"
+                   v-on:click="type = Types.WRITE">
+            <label class="tab_item" for="write">記述</label>
+            <input id="select" type="radio" name="tab_item" value="1" v-bind:checked="type === Types.SELECT"
+                   v-on:click="type = Types.SELECT">
+            <label class="tab_item" for="select">選択</label>
+            <input id="complete" type="radio" name="tab_item" value="2"
+                   v-bind:checked="type === Types.COMPLETE"
+                   v-on:click="type = Types.COMPLETE">
+            <label class="tab_item" for="complete">完答</label>
+            <input id="select-complete" type="radio" name="tab_item" value="3"
+                   v-bind:checked="type === Types.SELECT_COMPLETE"
+                   v-on:click="type = Types.SELECT_COMPLETE">
+            <label class="tab_item" for="select-complete">選択完答</label>
+            <div class="tab_content">
+
+              <b-form-group
+                id="input-group-1"
+                label="問題文"
+                label-for="input-1">
+                <b-form-input
+                  id="input-1"
+                  v-model="textQuestion"
+                  type="text"
+                  required
+                  placeholder="問題文"/>
+              </b-form-group>
+
+              <b-form-group
+                id="input-group-2"
+                label="解答"
+                label-for="input-2">
+                <div id="group-text-question-answers" v-for="(textAnswer,index) in textAnswers"
+                     v-bind:key="index">
+                  <div class="area correct"
+                       v-if="index < getAnswerSize()">
+                    <b-form-textarea
+                      rows="1"
+                      max-rows="1"
+                      wrap="soft"
+                      id="input-2"
+                      v-model="textAnswer.text"
+                      type="text"
+                      required
+                      v-bind:placeholder="'解答' + (index+1)"/>
+                  </div>
                 </div>
+              </b-form-group>
 
-                <div id="form-question-tab">
-                    <div class="tabs">
-                        <input id="write" type="radio" name="tab_item" value="0" v-bind:checked="type === Types.WRITE"
-                               v-on:click="type = Types.WRITE">
-                        <label class="tab_item" for="write">記述</label>
-                        <input id="select" type="radio" name="tab_item" value="1" v-bind:checked="type === Types.SELECT"
-                               v-on:click="type = Types.SELECT">
-                        <label class="tab_item" for="select">選択</label>
-                        <input id="complete" type="radio" name="tab_item" value="2"
-                               v-bind:checked="type === Types.COMPLETE"
-                               v-on:click="type = Types.COMPLETE">
-                        <label class="tab_item" for="complete">完答</label>
-                        <input id="select-complete" type="radio" name="tab_item" value="3"
-                               v-bind:checked="type === Types.SELECT_COMPLETE"
-                               v-on:click="type = Types.SELECT_COMPLETE">
-                        <label class="tab_item" for="select-complete">選択完答</label>
-                        <div class="tab_content">
 
-                            <div id="group-text-question-question">
-                                <div class="area">
-                                    <label class="ef">
-                                        <textarea rows="1" wrap="soft" id="text-question-question"
-                                                  placeholder="問題文" v-model="textQuestion"></textarea>
-                                    </label>
-                                </div>
-                            </div>
+              <div v-if="type === Types.SELECT || type === Types.SELECT_COMPLETE">
 
-                            <div id="group-text-question-answers" v-for="(textAnswer,index) in textAnswers"
-                                 v-bind:key="index">
-                                <div class="area correct"
-                                     v-if="index < getAnswerSize()">
-                                    <label class="ef">
-                                        <textarea rows="1" wrap="soft"
-                                                  v-bind:placeholder="'解答' + (index+1)"
-                                                  v-model="textAnswer.text">
-                                        </textarea>
-                                    </label>
-                                </div>
-                            </div>
+                <b-form-group
+                  id="input-group-3"
+                  label="他の選択肢"
+                  label-for="input-3">
 
-                            <div v-if="type === Types.SELECT || type === Types.SELECT_COMPLETE">
-                                <div id="group-text-question-others"
-                                     v-for="(textOther,index) in textOthers"
-                                     v-bind:key="index">
-                                    <div class="area other"
-                                         v-if="index < getOtherSize()">
-                                        <label class="ef">
-                                             <textarea rows="1" wrap="soft" id="text-question-other-1"
-                                                       v-bind:placeholder="(isAuto) ? '自動生成' : '他の選択肢'"
-                                                       v-model="textOther.text" v-bind:disabled="isAuto">
-                                             </textarea>
-                                        </label>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div id="group-text-question-explanation" class="area" v-if="isExplanation">
-                                <label class="ef">
-                                    <textarea rows="1" wrap="soft" id="text-question-explanation" placeholder="解説"
-                                              v-model="textExplanation">
-
-                                    </textarea>
-                                </label>
-                            </div>
-
-                            <div id="group-image-question" v-if="isUseImage">
-                                <div id="image-question" class="clickable" @click.stop="$refs.imageQuestion.click()">
-                                    <img v-bind:src="imageUrl" class="image"/>
-                                    {{textImageRef}}
-                                </div>
-                                <p id="message-image">{{textImageUploadState}}</p>
-                                <input type="file" id="files" ref="imageQuestion" v-show="false" @change="addImage"/>
-                            </div>
-
-                            <button id="save-question" class="btn wide" type="button" @click="createQuestion()"
-                                    v-bind:disabled="!validate()">{{validate() ? ((questionId !== "") ? '上書き保存' :
-                                '追加して保存') : "未入力のフォームがあります"}}
-                            </button>
-
-                            <details id="detail">
-                                <summary>詳細設定</summary>
-
-                                <div class="check" id="check-explanation-layout">
-                                    <input type="checkbox" id="check-explanation"
-                                           v-model="isExplanation"/>
-                                    <label for="check-explanation">解説文を入れる</label>
-                                </div>
-
-                                <div class="check" id="check-image-layout">
-                                    <input type="checkbox" id="check-image"
-                                           v-model="isUseImage"/>
-                                    <label for="check-image">画像を添付する</label>
-                                </div>
-
-                                <div class="check" id="check-check-order-layout" v-if="type === Types.COMPLETE">
-                                    <input type="checkbox" id="check-check-order" v-model="isCheckOrder"/>
-                                    <label for="check-check-order">解答順序を判定に含める</label>
-                                </div>
-
-                                <div class="check" id="check-auto-layout"
-                                     v-if="type === Types.SELECT || type === Types.SELECT_COMPLETE">
-                                    <input type="checkbox" id="check-auto" v-model="isAuto"/>
-                                    <label for="check-auto">選択肢の自動生成</label>
-                                </div>
-
-                                <div class="spinner cp_sl01 " v-if="type === Types.SELECT">
-                                    <select name="select-complete-select-size" id="select-other-size"
-                                            v-model="otherSize">
-                                        <option v-for="(n) in 5" v-bind:key="n" v-bind:value="n"
-                                                v-bind:selected="n === 3">選択肢数 {{n+1}}
-                                        </option>
-                                    </select>
-                                </div>
-                                <div class="spinner cp_sl01 " v-if="type === Types.COMPLETE">
-                                    <select name="select-complete-answer-size"
-                                            id="select-complete-answer-size" v-model="answerSize">
-                                        <option v-for="(n) in 3" v-bind:key="n" v-bind:value="n+1"
-                                                v-bind:selected="n === 2">解答数 {{n+1}}
-                                        </option>
-                                    </select>
-                                </div>
-                                <div class="spinner cp_sl01 " v-if="type === Types.SELECT_COMPLETE">
-                                    <select name="select-complete-answer-size"
-                                            id="select-select-complete-answer-size" v-model="answerSizeSelectComplete">
-                                        <option v-for="(n) in 7" v-bind:key="n" v-bind:value="n-1"
-                                                v-bind:selected="n === 3">解答数 {{n-1}}
-                                        </option>
-                                    </select>
-                                </div>
-                                <div class="spinner cp_sl01" v-if="type === Types.SELECT_COMPLETE">
-                                    <select name="select-complete-select-size"
-                                            id="select-answer-other-size" v-model="otherSizeSelectComplete">
-                                        <option v-for="(n) in 5" v-bind:key="n" v-bind:value="n"
-                                                v-bind:selected="n === 3">選択肢数 {{n+1}}
-                                        </option>
-                                    </select>
-                                </div>
-                            </details>
-                        </div>
+                  <div id="group-text-question-others"
+                       v-for="(textOther,index) in textOthers"
+                       v-bind:key="index">
+                    <div class="area other"
+                         v-if="index < getOtherSize()">
+                      <b-form-textarea
+                        rows="1"
+                        max-rows="1"
+                        wrap="soft"
+                        id="input-3"
+                        v-model="textOther.text" v-bind:disabled="isAuto"
+                        type="text"
+                        required
+                        v-bind:placeholder="(isAuto) ? '自動生成' : '他の選択肢'"/>
                     </div>
+                  </div>
+                </b-form-group>
+              </div>
+
+              <b-form-textarea
+                rows="1"
+                max-rows="0"
+                wrap="soft"
+                id="input-3"
+                v-if="isExplanation"
+                v-model="textExplanation"
+                type="text"
+                required
+                placeholder="解説"/>
+
+              <div id="group-image-question" v-if="isUseImage">
+                <div id="image-question" class="clickable" @click.stop="$refs.imageQuestion.click()">
+                  <img v-bind:src="imageUrl" class="image"/>
+                  {{textImageRef}}
                 </div>
-            </div>
-        </div>
+                <p id="message-image">{{textImageUploadState}}</p>
+                <input type="file" id="files" ref="imageQuestion" v-show="false" @change="addImage"/>
+              </div>
 
-        <div id="ad">
-            <a href="https://px.a8.net/svt/ejp?a8mat=35Q274+AEHOAA+3CWI+NV1XD" rel="nofollow">
-                <img border="0" width="320" height="50" alt=""
-                     src="https://www25.a8.net/svt/bgt?aid=191012512629&wid=001&eno=01&mid=s00000015669004008000&mc=1"></a>
-            <img border="0" width="1" height="1" src="https://www13.a8.net/0.gif?a8mat=35Q274+AEHOAA+3CWI+NV1XD"
-                 alt="">
-        </div>
+              <b-button block variant="primary" @click="createQuestion()" v-bind:disabled="!validate()">
+                {{validate() ? ((questionId !== "") ? '上書き保存' :
+                '追加して保存') : "未入力のフォームがあります"}}
+              </b-button>
 
-        <div id="questions" class="questions" v-for="q in questions" v-bind:key="q.id">
-            <div class="card clickable">
-                <div class="card-content">
-                    <a class="question-name deco-none" @click="editQuestion(q)">
-                        <div class="question">
-                            <p class="single">{{q.question}}</p>
-                            <p class="single"> {{q.answer}} </p>
-                        </div>
-                    </a>
-                    <button class="delete-question btn-rect-border" type="button" v-on:click="deleteQuestion(q)">削除
-                    </button>
+              <details id="detail">
+                <summary>詳細設定</summary>
+
+                <div class="check" id="check-explanation-layout">
+                  <input type="checkbox" id="check-explanation"
+                         v-model="isExplanation"/>
+                  <label for="check-explanation">解説文を入れる</label>
                 </div>
+
+                <div class="check" id="check-image-layout">
+                  <input type="checkbox" id="check-image"
+                         v-model="isUseImage"/>
+                  <label for="check-image">画像を添付する</label>
+                </div>
+
+                <div class="check" id="check-check-order-layout" v-if="type === Types.COMPLETE">
+                  <input type="checkbox" id="check-check-order" v-model="isCheckOrder"/>
+                  <label for="check-check-order">解答順序を判定に含める</label>
+                </div>
+
+                <div class="check" id="check-auto-layout"
+                     v-if="type === Types.SELECT || type === Types.SELECT_COMPLETE">
+                  <input type="checkbox" id="check-auto" v-model="isAuto"/>
+                  <label for="check-auto">選択肢の自動生成</label>
+                </div>
+
+                <div class="spinner cp_sl01 " v-if="type === Types.SELECT">
+                  <select name="select-complete-select-size" id="select-other-size"
+                          v-model="otherSize">
+                    <option v-for="(n) in 5" v-bind:key="n" v-bind:value="n"
+                            v-bind:selected="n === 3">選択肢数 {{n+1}}
+                    </option>
+                  </select>
+                </div>
+                <div class="spinner cp_sl01 " v-if="type === Types.COMPLETE">
+                  <select name="select-complete-answer-size"
+                          id="select-complete-answer-size" v-model="answerSize">
+                    <option v-for="(n) in 3" v-bind:key="n" v-bind:value="n+1"
+                            v-bind:selected="n === 2">解答数 {{n+1}}
+                    </option>
+                  </select>
+                </div>
+                <div class="spinner cp_sl01 " v-if="type === Types.SELECT_COMPLETE">
+                  <select name="select-complete-answer-size"
+                          id="select-select-complete-answer-size" v-model="answerSizeSelectComplete">
+                    <option v-for="(n) in 7" v-bind:key="n" v-bind:value="n-1"
+                            v-bind:selected="n === 3">解答数 {{n-1}}
+                    </option>
+                  </select>
+                </div>
+                <div class="spinner cp_sl01" v-if="type === Types.SELECT_COMPLETE">
+                  <select name="select-complete-select-size"
+                          id="select-answer-other-size" v-model="otherSizeSelectComplete">
+                    <option v-for="(n) in 5" v-bind:key="n" v-bind:value="n"
+                            v-bind:selected="n === 3">選択肢数 {{n+1}}
+                    </option>
+                  </select>
+                </div>
+              </details>
             </div>
+          </div>
         </div>
+      </b-card-body>
+    </b-card>
 
-        <div class="loader" v-if="loading">Loading...</div>
 
+    <div id="ad">
+      <a href="https://px.a8.net/svt/ejp?a8mat=35Q274+AEHOAA+3CWI+NV1XD" rel="nofollow">
+        <img border="0" width="320" height="50" alt=""
+             src="https://www25.a8.net/svt/bgt?aid=191012512629&wid=001&eno=01&mid=s00000015669004008000&mc=1"></a>
+      <img border="0" width="1" height="1" src="https://www13.a8.net/0.gif?a8mat=35Q274+AEHOAA+3CWI+NV1XD"
+           alt="">
     </div>
+
+    <div id="questions" class="questions" v-for="q in questions" v-bind:key="q.id">
+      <div class="card clickable">
+        <div class="card-content">
+          <a class="question-name deco-none" @click="editQuestion(q)">
+            <div class="question">
+              <p class="single">{{q.question}}</p>
+              <p class="single"> {{q.answer}} </p>
+            </div>
+          </a>
+          <button class="delete-question btn-rect-border" type="button" v-on:click="deleteQuestion(q)">削除
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="loader" v-if="loading">Loading...</div>
+
+  </div>
 
 </template>
 
@@ -320,7 +346,7 @@
                 this.isAuto = question.auto;
                 this.order = question.order;
 
-                if(question.imageRef !== ""){
+                if (question.imageRef !== "") {
                     firebase.storage().ref().child(question.imageRef).getDownloadURL().then((url) => {
                         this.imageUrl = url;
                         this.textImageRef = "画像の差し替え";
@@ -425,9 +451,59 @@
 
 <style scoped>
 
-    .image {
-        max-width: 48px;
-        max-height: 48px;
-    }
+  .image {
+    max-width: 48px;
+    max-height: 48px;
+  }
+
+  .spinner {
+    overflow: visible;
+    margin: 8px 0 0 0;
+    text-align: center;
+  }
+
+  .spinner select {
+    width: 100%;
+    padding-right: 1em;
+    cursor: pointer;
+    text-indent: 1px;
+    text-overflow: ellipsis;
+    border: none;
+    outline: none;
+    background: transparent none;
+    box-shadow: none;
+    -webkit-appearance: none;
+    appearance: none;
+  }
+
+  .spinner select::-ms-expand {
+    display: none;
+  }
+
+  .spinner.cp_sl01 {
+    position: relative;
+    border: 1px solid #bbbbbb;
+    border-radius: 2px;
+    background: #ffffff;
+  }
+
+  .spinner.cp_sl01::before {
+    position: absolute;
+    top: 0.8em;
+    right: 0.9em;
+    width: 0;
+    height: 0;
+    padding: 0;
+    content: '';
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-top: 6px solid #666666;
+    pointer-events: none;
+  }
+
+  .spinner.cp_sl01 select {
+    padding: 8px 38px 8px 8px;
+    color: #666666;
+  }
 
 </style>

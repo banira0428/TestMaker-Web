@@ -1,21 +1,21 @@
 <template>
-    <div id="app">
-        <Header/>
-        <div class="content">
-            <router-view/>
-        </div>
-    </div>
+  <div id="app">
+    <Header/>
+    <router-view/>
+  </div>
 </template>
 
 <script>
     import Header from "./components/Header"
+    import Home from "./components/Home"
 
     export default {
-        components: {Header}
+        components: {Header, Home}
     };
 </script>
 
 <style>
-    #app {
-    }
+  #app {
+    height: 100%;
+  }
 </style>
