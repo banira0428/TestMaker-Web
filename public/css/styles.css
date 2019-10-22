@@ -3,6 +3,10 @@
 @import url("select.css");
 @import url("loader.css");
 
+#app {
+  background-color: #D9F1FB;
+}
+
 .content {
   margin-left: auto;
   margin-right: auto;

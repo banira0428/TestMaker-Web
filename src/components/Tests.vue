@@ -1,46 +1,61 @@
 <template>
-    <div class="hello">
-        <div id="content">
-            <div id="form-test">
-                <div class="card">
-                    <div class="card-content">
-                        <div class="area">
-                            <label class="ef">
-                                    <input type="text" rows="1" wrap="soft" id="text-test-title" v-model="testName"
-                                              placeholder="新しい問題集のタイトル"/>
-                            </label>
-                        </div>
-                        <button id="save-test" class="btn wide" type="button"
-                                v-on:click="createTest()" v-bind:disabled='testName === ""'>追加して保存
-                        </button>
-                    </div>
-                </div>
-            </div>
+  <div class="hello">
+    <div id="content">
+      <b-card>
+        <b-form>
+          <b-form-group
+            id="input-group-1"
+            label="問題集のタイトル"
+            label-for="input-1"
+          >
+            <b-form-input
+              id="input-1"
+              v-model="testName"
+              type="text"
+              required
+              placeholder="問題集のタイトル"
+            ></b-form-input>
+          </b-form-group>
 
-            <div id="ad">
-                <a href="https://px.a8.net/svt/ejp?a8mat=35Q274+AEHOAA+3CWI+NV1XD" rel="nofollow">
-                    <img border="0" width="320" height="50" alt=""
-                         src="https://www25.a8.net/svt/bgt?aid=191012512629&wid=001&eno=01&mid=s00000015669004008000&mc=1"></a>
-                <img border="0" width="1" height="1" src="https://www13.a8.net/0.gif?a8mat=35Q274+AEHOAA+3CWI+NV1XD"
-                     alt="">
-            </div>
+          <b-button block variant="primary" v-on:click="createTest()" v-bind:disabled='testName === ""'>
+            追加して保存
+          </b-button>
+        </b-form>
+      </b-card>
 
-            <div id="tests" class="tests" v-for="test in tests" v-bind:key="test.id">
-                <div class="card clickable">
-                    <div class="card-content">
-                        <a class="test-name deco-none" v-on:click="toQuestions(test.id)">
-                            <div class="test">{{test.name}}</div>
-                        </a>
-                        <button class="delete-test btn-rect-border" type="button" v-on:click="deleteTest(test)">削除
-                        </button>
-                    </div>
-                </div>
-            </div>
+      <div id="ad">
+        <a href="https://px.a8.net/svt/ejp?a8mat=35Q274+AEHOAA+3CWI+NV1XD" rel="nofollow">
+          <img border="0" width="320" height="50" alt=""
+               src="https://www25.a8.net/svt/bgt?aid=191012512629&wid=001&eno=01&mid=s00000015669004008000&mc=1"></a>
+        <img border="0" width="1" height="1" src="https://www13.a8.net/0.gif?a8mat=35Q274+AEHOAA+3CWI+NV1XD"
+             alt="">
+      </div>
 
-            <div class="loader" v-if="loading">Loading...</div>
+      <div v-for="test in tests" v-bind:key="test.id">
+        <b-card>
+          <b-row>
+            <b-col md="8">
+              <b-card-text text-tag="h2">{{test.name}}</b-card-text>
+            </b-col>
+            <b-col md="2">
+              <b-button block variant="primary" v-on:click="toQuestions(test.id)">編集</b-button>
+            </b-col>
+            <b-col md="2">
+              <b-button block variant="danger" v-on:click="deleteTest(test)">削除</b-button>
+            </b-col>
+          </b-row>
+        </b-card>
+      </div>
 
-        </div>
+      <b-row>
+        <b-col md="5"></b-col>
+        <b-col md="2">
+          <b-spinner variant="primary" label="Spinning" v-if="loading"/>
+        </b-col>
+        <b-col md="5"></b-col>
+      </b-row>
     </div>
+  </div>
 </template>
 
 <script>
