@@ -1,12 +1,10 @@
 <template>
-    <div id="content-login">
-        <div class="card">
-            <div class="card-content center">
-                <h2>このサービスを利用するにはログインが必要です</h2>
-                <div id="firebaseui-auth-container"></div>
-            </div>
-        </div>
-    </div>
+  <b-card>
+    <b-card-text text-tag="h3">
+      このサービスを利用するにはログインが必要です
+    </b-card-text>
+    <div id="firebaseui-auth-container"></div>
+  </b-card>
 </template>
 
 <script>
