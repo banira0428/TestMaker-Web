@@ -7,10 +7,9 @@
 
 <script>
     import Header from "./components/Header"
-    import Home from "./components/Home"
 
     export default {
-        components: {Header, Home}
+        components: {Header}
     };
 </script>
 
