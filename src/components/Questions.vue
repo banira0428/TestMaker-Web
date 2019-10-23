@@ -1,5 +1,5 @@
 <template>
-  <div id="form-question">
+  <div>
     <div class="border-bottom pb-1">
       <h1 class="h2 d-inline">「{{testName}}」の問題一覧</h1>
       <b-spinner class="ml-2" variant="primary" label="Spinning" v-if="loading"/>
@@ -39,7 +39,7 @@
               id="input-group-2"
               label="解答"
               label-for="input-2">
-              <div id="group-text-question-answers" v-for="(textAnswer,index) in textAnswers"
+              <div id="group-text-question-answers" class="mb-2" v-for="(textAnswer,index) in textAnswers"
                    v-bind:key="index">
                 <div class="area correct"
                      v-if="index < getAnswerSize()">
@@ -63,8 +63,7 @@
                 id="input-group-3"
                 label="他の選択肢"
                 label-for="input-3">
-
-                <div id="group-text-question-others"
+                <div class="mb-2"
                      v-for="(textOther,index) in textOthers"
                      v-bind:key="index">
                   <div class="area other"
@@ -218,7 +217,7 @@
     </div>
 
     <b-card-group class="mt-3">
-      <div id="questions" class="questions col-md-4 mt-3" v-for="q in questions" v-bind:key="q.id">
+      <div class="col-md-4 mt-3" v-for="q in questions" v-bind:key="q.id">
         <b-card>
           <b-card-text class="single">{{q.question}}</b-card-text>
           <b-card-text class="single">{{q.answer}}</b-card-text>
