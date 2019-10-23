@@ -13,37 +13,11 @@
   cursor: pointer;
 }
 
-.none {
-  display: none;
-}
-
 .single {
   overflow: hidden;
   text-overflow: ellipsis;
-  width: 80%;
+  width: 100%;
   white-space: nowrap;
-}
-
-#image-question {
-  cursor: pointer;
-  margin-top: 8px;
-  border: 1px solid #1b2538;
-  padding: 0.3em;
-  border-radius: 5px;
-}
-
-#group-image-question {
-  position: relative;
-}
-
-#message-image {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  right: 0;
-  padding: 0.3em;
-  margin-top: auto;
-  margin-bottom: auto;
 }
 
 .content-about {

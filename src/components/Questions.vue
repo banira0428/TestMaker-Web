@@ -82,25 +82,36 @@
               </b-form-group>
             </div>
 
-            <b-form-textarea
-              rows="1"
-              max-rows="0"
-              wrap="soft"
-              id="input-3"
+            <b-form-group
+              id="input-group-5"
+              label="解説"
               v-if="isExplanation"
-              v-model="textExplanation"
-              type="text"
-              required
-              placeholder="解説"/>
+              label-for="input-3">
+              <b-form-textarea
+                rows="1"
+                max-rows="0"
+                wrap="soft"
+                id="input-3"
+                v-model="textExplanation"
+                type="text"
+                required
+                placeholder="解説"/>
+            </b-form-group>
 
-            <div id="group-image-question" v-if="isUseImage">
-              <div id="image-question" class="clickable mb-2" @click.stop="$refs.imageQuestion.click()">
-                <img v-bind:src="imageUrl" class="image"/>
-                {{textImageRef}}
+            <b-form-group
+              label="添付画像"
+              v-if="isUseImage"
+              label-for="form-image">
+              <div class="d-flex">
+                <b-form-file
+                  id="form-image"
+                  v-model="fileImageQuestion"
+                  placeholder="画像ファイルを選択"
+                  drop-placeholder="画像ファイルをここにドロップ"
+                ></b-form-file>
+                <img v-show="imageUrl !== ''" :src="imageUrl" alt class="image">
               </div>
-              <p id="message-image">{{textImageUploadState}}</p>
-              <input type="file" id="files" ref="imageQuestion" v-show="false" @change="addImage"/>
-            </div>
+            </b-form-group>
 
             <b-button class="btn-lg" block variant="outline-primary" @click="createQuestion()"
                       v-bind:disabled="!validate()">
@@ -260,8 +271,7 @@
                 textAnswers: [{text: ""}, {text: ""}, {text: ""}, {text: ""}, {text: ""}, {text: ""}],
                 textOthers: [{text: ""}, {text: ""}, {text: ""}, {text: ""}, {text: ""}, {text: ""}],
                 textExplanation: "",
-                textImageRef: "画像ファイルを選択",
-                textImageUploadState: "",
+                fileImageQuestion: null,
                 imageRef: "",
                 imageUrl: "",
                 type: 0,
@@ -281,9 +291,22 @@
             this.testId = store.state.test.id;
             this.fetchQuestions();
         },
+        watch: {
+            fileImageQuestion: function (newFileImageQuestion) {
+                if (newFileImageQuestion === null) return;
+
+                let reader = new FileReader();
+                let vm = this;
+                reader.onload = function (e) {
+                    vm.imageUrl = e.target.result;
+                };
+                reader.readAsDataURL(newFileImageQuestion);
+            }
+        },
         methods: {
 
             createQuestion: function () {
+                this.addImage();
 
                 let question = {
                     question: this.textQuestion,
@@ -349,6 +372,7 @@
             },
 
             editQuestion(question) {
+                this.clearForm();
 
                 this.questionId = question.id;
                 this.textQuestion = question.question;
@@ -378,7 +402,6 @@
                 if (question.imageRef !== "") {
                     firebase.storage().ref().child(question.imageRef).getDownloadURL().then((url) => {
                         this.imageUrl = url;
-                        this.textImageRef = "画像の差し替え";
                     });
                 }
             },
@@ -434,8 +457,7 @@
                 this.textAnswers = [{text: ""}, {text: ""}, {text: ""}, {text: ""}, {text: ""}, {text: ""}];
                 this.textOthers = [{text: ""}, {text: ""}, {text: ""}, {text: ""}, {text: ""}, {text: ""}];
                 this.textExplanation = "";
-                this.textImageRef = "画像ファイルを選択";
-                this.textImageUploadState = "";
+                this.fileImageQuestion = null;
                 this.order = 0;
                 this.imageRef = "";
                 this.imageUrl = "";
@@ -445,35 +467,19 @@
                 if (this.textQuestion === "") return false;
                 if (this.textAnswers.some((it, index) => it.text === "" && index < this.getAnswerSize())) return false;
                 if (this.textOthers.some((it, index) => it.text === "" && index < this.getOtherSize() && !this.isAuto)) return false;
-
                 return true;
             },
 
-            addImage: function (e) {
-                this.textImageUploadState = "アップロード中";
+            addImage: function () {
+                if (this.fileImageQuestion === null) return;
 
-                this.textImageRef = e.target.value.split("\\").slice(-1)[0].substr(0, 30);
-                let file = e.target.files[0]; // FileList object
-
-                if (file === undefined) {
-                    if (this.imageUrl !== "") {
-                        this.textImageRef = "画像の差し替え";
-                    } else {
-                        this.textImageRef = "画像ファイルを選択";
-                    }
-                    this.textImageUploadState = "";
-                }
-
-                if (file.size > 1000000) {
-                    this.textImageUploadState = "ファイルサイズは1MB以下にしてください";
+                if (this.fileImageQuestion.size > 1000000) {
+                    window.alert("ファイルサイズは1MB以下にしてください");
                 } else {
                     this.imageRef = firebase.auth().currentUser.uid + '/' + new Date().getTime();
-                    firebase.storage().ref().child(this.imageRef).put(file, {contentType: 'image/jpeg'}).then((snapshot) => {
-                        this.textImageUploadState = "サーバー処理中";
+                    firebase.storage().ref().child(this.imageRef).put(this.fileImageQuestion, {contentType: 'image/jpeg'}).then((snapshot) => {
                         snapshot.ref.getDownloadURL().then((url) => {
-                            this.textImageUploadState = "";
                             this.imageUrl = url;
-                            this.textImageRef = "画像の差し替え";
                         });
                     });
                 }
