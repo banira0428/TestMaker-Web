@@ -6,7 +6,7 @@
     </div>
 
     <b-card-group class="mt-3">
-      <b-col md="4">
+      <b-col md="4" class="mt-3">
         <b-card>
           <b-card-title class="single">新しく追加する</b-card-title>
           <b-row class="mt-1">
@@ -30,7 +30,7 @@
         </b-card>
       </b-col>
 
-      <div v-for="test in tests" v-bind:key="test.id" class="col-md-4">
+      <div v-for="test in tests" v-bind:key="test.id" class="col-md-4 mt-3">
         <b-card>
           <b-card-title class="single">{{test.name}}</b-card-title>
           <b-row>

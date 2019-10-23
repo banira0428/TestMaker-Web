@@ -7,7 +7,7 @@
 
     <b-card-group class="mt-3">
       <b-col md="8">
-        <b-card no-body>
+        <b-card no-body class="mt-1">
           <b-card-header header-tag="nav">
             <b-card-title>
               問題の編集
@@ -95,7 +95,7 @@
               placeholder="解説"/>
 
             <div id="group-image-question" v-if="isUseImage">
-              <div id="image-question" class="clickable" @click.stop="$refs.imageQuestion.click()">
+              <div id="image-question" class="clickable mb-2" @click.stop="$refs.imageQuestion.click()">
                 <img v-bind:src="imageUrl" class="image"/>
                 {{textImageRef}}
               </div>
@@ -113,7 +113,7 @@
       </b-col>
 
       <b-col md="4">
-        <b-card no-body>
+        <b-card no-body class="mt-1">
           <b-card-header header-tag="nav">
             <b-card-title>詳細設定</b-card-title>
           </b-card-header>
@@ -218,16 +218,16 @@
     </div>
 
     <b-card-group class="mt-3">
-      <div id="questions" class="questions col-md-4" v-for="q in questions" v-bind:key="q.id">
+      <div id="questions" class="questions col-md-4 mt-3" v-for="q in questions" v-bind:key="q.id">
         <b-card>
           <b-card-text class="single">{{q.question}}</b-card-text>
           <b-card-text class="single">{{q.answer}}</b-card-text>
           <b-row>
             <b-col md="7">
-              <b-button block variant="outline-primary" v-on:click="editQuestion(q)">編集</b-button>
+              <b-button class="mt-1" block variant="outline-primary" v-on:click="editQuestion(q)">編集</b-button>
             </b-col>
             <b-col md="5">
-              <b-button block variant="outline-danger" v-on:click="deleteQuestion(q)">削除</b-button>
+              <b-button class="mt-1" block variant="outline-danger" v-on:click="deleteQuestion(q)">削除</b-button>
             </b-col>
           </b-row>
         </b-card>
@@ -484,60 +484,8 @@
 </script>
 
 <style scoped>
-
   .image {
     max-width: 48px;
     max-height: 48px;
   }
-
-  .spinner {
-    overflow: visible;
-    margin: 8px 0 0 0;
-    text-align: center;
-  }
-
-  .spinner select {
-    width: 100%;
-    padding-right: 1em;
-    cursor: pointer;
-    text-indent: 1px;
-    text-overflow: ellipsis;
-    border: none;
-    outline: none;
-    background: transparent none;
-    box-shadow: none;
-    -webkit-appearance: none;
-    appearance: none;
-  }
-
-  .spinner select::-ms-expand {
-    display: none;
-  }
-
-  .spinner.cp_sl01 {
-    position: relative;
-    border: 1px solid #bbbbbb;
-    border-radius: 2px;
-    background: #ffffff;
-  }
-
-  .spinner.cp_sl01::before {
-    position: absolute;
-    top: 0.8em;
-    right: 0.9em;
-    width: 0;
-    height: 0;
-    padding: 0;
-    content: '';
-    border-left: 6px solid transparent;
-    border-right: 6px solid transparent;
-    border-top: 6px solid #666666;
-    pointer-events: none;
-  }
-
-  .spinner.cp_sl01 select {
-    padding: 8px 38px 8px 8px;
-    color: #666666;
-  }
-
 </style>
