@@ -1,13 +1,22 @@
 <template>
-    <header id="top-head" v-bind:class="{open: isOpen}">
-        <h2 class="title"><a href="/">暗記メーカー α版</a></h2>
-        <a href="#" class="menu-mobile" id="toggle-menu" v-on:click="isOpen = !isOpen">{{isOpen ? '閉じる' : 'メニュー'}}</a>
-        <ul>
-            <li><a href="/">ホーム</a></li>
-            <li><a href="#" @click="isOpen = false"><router-link to="/about">このサイトについて</router-link></a></li>
-            <li><a href="#" @click="signOut" v-if="isSignIn">{{'ログアウト'}}</a></li>
-        </ul>
-    </header>
+  <header class="pb-0">
+    <b-navbar class="header" toggleable="md" type="dark" variant="info">
+      <b-navbar-brand href="/">暗記メーカー</b-navbar-brand>
+
+      <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
+
+      <b-collapse id="nav-collapse" is-nav>
+        <b-navbar-nav>
+          <b-nav-item to="/index">アプリ</b-nav-item>
+          <b-nav-item to="/help">ヘルプ</b-nav-item>
+        </b-navbar-nav>
+
+        <b-navbar-nav class="ml-auto">
+          <b-nav-item href="#" @click="signOut" v-if="isSignIn">ログアウト</b-nav-item>
+        </b-navbar-nav>
+      </b-collapse>
+    </b-navbar>
+  </header>
 </template>
 
 <script>
@@ -16,21 +25,15 @@
 
     export default {
         name: "Header",
-        data: function () {
-            return {
-                isOpen: false,
-            }
-        },
         computed: {
-          isSignIn() {
-              return store.state.status
-          }
+            isSignIn() {
+                return store.state.status
+            }
         },
         methods: {
             signOut: function () {
-                if(firebase.auth().currentUser){
+                if (firebase.auth().currentUser) {
                     firebase.auth().signOut().then(() => {
-                        this.isOpen = false;
                         this.$router.push({path: "/signin"});
                     });
                 }
@@ -40,5 +43,7 @@
 </script>
 
 <style scoped>
-
+  .header {
+    height: 64px;
+  }
 </style>

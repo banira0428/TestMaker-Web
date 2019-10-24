@@ -3,19 +3,22 @@ import VueRouter from 'vue-router';
 import Tests from './components/Tests';
 import Questions from './components/Questions';
 import SignIn from './components/SignIn';
-import About from './components/About';
+import Help from './components/Help';
 import Terms from './components/Terms';
+import Privacy from './components/Privacy';
 import firebase from 'firebase';
+import Home from './components/Home';
 
 Vue.use(VueRouter);
 
 const routes = [
   {path: '/', component: Tests},
-  {path: '/questions/:id', component: Questions},
+  {path: '/questions', component: Questions},
   {path: '/signin', component: SignIn, meta: {isPublic: true}},
-  {path: '/about', component: About, meta: {isPublic: true}},
-  {path: '/terms', component: Terms, meta: {isPublic: true}}
-
+  {path: '/help', component: Help, meta: {isPublic: true}},
+  {path: '/terms', component: Terms, meta: {isPublic: true}},
+  {path: '/privacy', component: Privacy, meta: {isPublic: true}},
+  {path: '/index', component: Home, meta: {isPublic: true}},
 ];
 
 const router = new VueRouter({

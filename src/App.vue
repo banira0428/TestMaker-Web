@@ -1,21 +1,26 @@
 <template>
-    <div id="app">
-        <Header/>
-        <div class="content">
-            <router-view/>
-        </div>
+  <div id="app">
+    <Header/>
+    <div class="flex-grow-1">
+      <router-view/>
     </div>
+    <Footer/>
+  </div>
 </template>
 
 <script>
     import Header from "./components/Header"
+    import Footer from './components/Footer';
 
     export default {
-        components: {Header}
+        components: {Header, Footer}
     };
 </script>
 
 <style>
-    #app {
-    }
+  #app {
+    height: 100%;
+    display: flex;
+    flex-flow: column;
+  }
 </style>

@@ -1,12 +1,11 @@
 <template>
-    <div id="content-login">
-        <div class="card">
-            <div class="card-content center">
-                <h2>このサービスを利用するにはログインが必要です</h2>
-                <div id="firebaseui-auth-container"></div>
-            </div>
-        </div>
+  <div class="text-center">
+    <div>
+      <img class="image" src="../assets/logo.png" alt width="120" height="120"/>
+      <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
+      <div id="firebaseui-auth-container"></div>
     </div>
+  </div>
 </template>
 
 <script>
@@ -32,5 +31,16 @@
 </script>
 
 <style scoped>
+
+  .image {
+    margin-bottom: 24px;
+  }
+
+  .text-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+  }
 
 </style>

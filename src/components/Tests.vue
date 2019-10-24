@@ -1,50 +1,63 @@
 <template>
-    <div class="hello">
-        <div id="content">
-            <div id="form-test">
-                <div class="card">
-                    <div class="card-content">
-                        <div class="area">
-                            <label class="ef">
-                                    <input type="text" rows="1" wrap="soft" id="text-test-title" v-model="testName"
-                                              placeholder="新しい問題集のタイトル"/>
-                            </label>
-                        </div>
-                        <button id="save-test" class="btn wide" type="button"
-                                v-on:click="createTest()" v-bind:disabled='testName === ""'>追加して保存
-                        </button>
-                    </div>
-                </div>
-            </div>
-
-            <div id="ad">
-                <a href="https://px.a8.net/svt/ejp?a8mat=35Q274+AEHOAA+3CWI+NV1XD" rel="nofollow">
-                    <img border="0" width="320" height="50" alt=""
-                         src="https://www25.a8.net/svt/bgt?aid=191012512629&wid=001&eno=01&mid=s00000015669004008000&mc=1"></a>
-                <img border="0" width="1" height="1" src="https://www13.a8.net/0.gif?a8mat=35Q274+AEHOAA+3CWI+NV1XD"
-                     alt="">
-            </div>
-
-            <div id="tests" class="tests" v-for="test in tests" v-bind:key="test.id">
-                <div class="card clickable">
-                    <div class="card-content">
-                        <a class="test-name deco-none" v-on:click="toQuestions(test.id)">
-                            <div class="test">{{test.name}}</div>
-                        </a>
-                        <button class="delete-test btn-rect-border" type="button" v-on:click="deleteTest(test)">削除
-                        </button>
-                    </div>
-                </div>
-            </div>
-
-            <div class="loader" v-if="loading">Loading...</div>
-
-        </div>
+  <div class="p-3 pb-3">
+    <div class="border-bottom pb-1">
+        <h1 class="h2 d-inline">問題集一覧</h1>
+        <b-spinner class="ml-2" variant="primary" label="Spinning" v-if="loading"/>
     </div>
+
+    <b-card-group class="mt-3">
+      <b-col md="4" class="mt-3">
+        <b-card>
+          <b-card-title class="single">問題集の追加</b-card-title>
+          <b-row class="mt-1">
+            <b-col md="7">
+              <b-form-input
+                class="mt-1"
+                id="input-1"
+                v-model="testName"
+                type="text"
+                required
+                placeholder="問題集のタイトル"
+              ></b-form-input>
+            </b-col>
+            <b-col md="5">
+              <b-button class="mt-1" block variant="outline-primary" v-on:click="createTest()"
+                        v-bind:disabled='testName === ""'>
+                保存
+              </b-button>
+            </b-col>
+          </b-row>
+        </b-card>
+      </b-col>
+
+      <div v-for="test in tests" v-bind:key="test.id" class="col-md-4 mt-3">
+        <b-card>
+          <b-card-title class="single">{{test.name}}</b-card-title>
+          <b-row>
+            <b-col md="7">
+              <b-button block variant="outline-primary" v-on:click="toQuestions(test)">編集</b-button>
+            </b-col>
+            <b-col md="5">
+              <b-button block variant="outline-danger" v-on:click="deleteTest(test)">削除</b-button>
+            </b-col>
+          </b-row>
+        </b-card>
+      </div>
+    </b-card-group>
+
+    <div id="ad">
+      <a href="https://px.a8.net/svt/ejp?a8mat=35Q274+AEHOAA+3CWI+NV1XD" rel="nofollow">
+        <img border="0" width="320" height="50" alt=""
+             src="https://www25.a8.net/svt/bgt?aid=191012512629&wid=001&eno=01&mid=s00000015669004008000&mc=1"></a>
+      <img border="0" width="1" height="1" src="https://www13.a8.net/0.gif?a8mat=35Q274+AEHOAA+3CWI+NV1XD"
+           alt="">
+    </div>
+  </div>
 </template>
 
 <script>
     import firebase from 'firebase';
+    import store from "../store";
 
     export default {
 
@@ -62,8 +75,9 @@
         },
         methods: {
 
-            toQuestions: function (id) {
-                this.$router.push({path: `/questions/${id}`});
+            toQuestions: function (test) {
+                store.commit('setTest',test);
+                this.$router.push({path: `/questions`});
             },
 
             createTest: function () {

@@ -12,10 +12,23 @@
    ========================================================================== */
 
 html {
+  position: relative;
   color: #222;
   font-size: 1em;
   line-height: 1.4;
-  background-color: #D9F1FB;
+  height: 100%;
+}
+
+body {
+  height: 100%;
+}
+
+header {
+  height: 64px;
+}
+
+footer {
+  height: 48px;
 }
 
 /*
