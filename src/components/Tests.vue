@@ -34,10 +34,10 @@
         <b-card>
           <b-card-title class="single">{{test.name}}</b-card-title>
           <b-row>
-            <b-col md="7">
+            <b-col class="mt-1" md="7">
               <b-button block variant="outline-primary" v-on:click="toQuestions(test)">編集</b-button>
             </b-col>
-            <b-col md="5">
+            <b-col class="mt-1" md="5">
               <b-button block variant="outline-danger" v-on:click="deleteTest(test)">削除</b-button>
             </b-col>
           </b-row>

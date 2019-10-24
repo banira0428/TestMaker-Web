@@ -1,5 +1,5 @@
 <template>
-  <div class="p-3 pb-3">
+  <div class="pt-3 p-sm-3 pb-3">
     <div class="border-bottom pb-1">
       <h1 class="h2 d-inline">「{{testName}}」の問題一覧</h1>
       <b-spinner class="ml-2" variant="primary" label="Spinning" v-if="loading"/>
