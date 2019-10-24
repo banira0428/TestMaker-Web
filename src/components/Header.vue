@@ -5,7 +5,7 @@
 
       <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 
-      <b-collapse id="nav-collapse" is-nav>
+      <b-collapse id="nav-collapse" is-nav >
         <b-navbar-nav>
           <b-nav-item to="/index">アプリ</b-nav-item>
           <b-nav-item to="/help">ヘルプ</b-nav-item>
@@ -43,7 +43,5 @@
 </script>
 
 <style scoped>
-  .header {
-    height: 64px;
-  }
+
 </style>

@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <Header/>
+    <Header class="front"/>
     <div class="flex-grow-1">
       <router-view/>
     </div>
@@ -22,5 +22,8 @@
     height: 100%;
     display: flex;
     flex-flow: column;
+  }
+  .front {
+    z-index: 3;
   }
 </style>

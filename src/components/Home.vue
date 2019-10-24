@@ -4,7 +4,7 @@
       <img class="overflow-hidden text-center shot " src="../assets/screenShot.png" alt>
     </div>
     <div class="text-center mt-sm-3">
-      <h1 class="h2">テスト勉強用アプリ「暗記メーカー」</h1>
+      <h1 class="h2 pl-5 pr-5">テスト勉強用アプリ「暗記メーカー」</h1>
       <div class="pb-3">
         <a
           class="mr-2"
