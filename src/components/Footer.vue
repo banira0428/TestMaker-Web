@@ -1,6 +1,6 @@
 <template>
   <footer class="w-100">
-    <b-navbar toggleable="md" type="light" variant="">
+    <b-navbar type="light" variant="">
       <b-navbar-nav class="ml-auto">
         <b-nav-item to="/terms">利用規約</b-nav-item>
         <b-nav-item to="/privacy">プライバシーポリシー</b-nav-item>

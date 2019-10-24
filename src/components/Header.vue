@@ -1,6 +1,6 @@
 <template>
-  <header>
-    <b-navbar toggleable="md" type="dark" variant="info">
+  <header class="pb-0">
+    <b-navbar class="header" toggleable="md" type="dark" variant="info">
       <b-navbar-brand href="/">暗記メーカー</b-navbar-brand>
 
       <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
@@ -42,4 +42,7 @@
 </script>
 
 <style scoped>
+  .header {
+    height: 64px;
+  }
 </style>

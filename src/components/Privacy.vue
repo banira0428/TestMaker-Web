@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="p-3">
     <div class="border-bottom pb-1 mb-3">
       <h1 class="h2 d-inline">暗記メーカー　プライバシーポリシー</h1>
     </div>

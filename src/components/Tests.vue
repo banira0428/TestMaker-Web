@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="p-3 pb-3">
     <div class="border-bottom pb-1">
         <h1 class="h2 d-inline">問題集一覧</h1>
         <b-spinner class="ml-2" variant="primary" label="Spinning" v-if="loading"/>
@@ -8,7 +8,7 @@
     <b-card-group class="mt-3">
       <b-col md="4" class="mt-3">
         <b-card>
-          <b-card-title class="single">新しく追加する</b-card-title>
+          <b-card-title class="single">問題集の追加</b-card-title>
           <b-row class="mt-1">
             <b-col md="7">
               <b-form-input
