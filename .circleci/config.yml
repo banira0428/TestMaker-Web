@@ -31,9 +31,6 @@ jobs:
           name: write storage
           command: echo VUE_APP_STORAGE_BUCKET=$FIREBASE_STORAGE_BUCKET >> .env
       - run:
-          name: show env
-          command: cat .env
-      - run:
           name: build
           command: npm run build
       - run:
