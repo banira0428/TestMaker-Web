@@ -1,24 +1,14 @@
-# vue
+# 「暗記メーカー」ブラウザ版
 
-## Project setup
-```
-yarn install
-```
+## 概要
 
-### Compiles and hot-reloads for development
-```
-yarn serve
-```
+スマートフォン用アプリ「暗記メーカー」の問題編集機能に特化したWebサービスです。
 
-### Compiles and minifies for production
-```
-yarn build
-```
+## 使用技術
 
-### Lints and fixes files
-```
-yarn lint
-```
+JavaScriptフレームワーク： [Vue.js](https://jp.vuejs.org/index.html)
+
+CSSフレームワーク： [BootStrapVue](https://bootstrap-vue.js.org/)
 
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
