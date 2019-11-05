@@ -11,7 +11,7 @@ JavaScriptフレームワーク： [Vue.js](https://jp.vuejs.org/index.html)
 CSSフレームワーク： [BootStrapVue](https://bootstrap-vue.js.org/)
 
 バックエンド： [Firebase](https://firebase.google.com/?hl=ja)
-（Authentication,Database,Storage,Hosting,functions）
+（Authentication, Database, Storage, Hosting, Functions）
 
 ## スクリーンショット
 
