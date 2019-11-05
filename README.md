@@ -10,6 +10,9 @@ JavaScriptフレームワーク： [Vue.js](https://jp.vuejs.org/index.html)
 
 CSSフレームワーク： [BootStrapVue](https://bootstrap-vue.js.org/)
 
+バックエンド： [Firebase](https://firebase.google.com/?hl=ja)
+（Authentication,Database,Storage,Hosting,functions）
+
 ## スクリーンショット
 
 ![問題集一覧画面](https://user-images.githubusercontent.com/25548427/68214935-b2afae00-0021-11ea-81aa-faff0f3a7d05.png)
