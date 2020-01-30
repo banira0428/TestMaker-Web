@@ -21,7 +21,7 @@
     </b-card>
 
     <div class="text-center mt-3">
-      その他ご不明な点があれば、<a href="mailto:testmaker.contact@gamil.com">こちら</a>までご連絡ください
+      その他ご不明な点があれば、<a href="mailto:testmaker.contact@gmail.com">こちら</a>までご連絡ください
     </div>
 
   </div>
