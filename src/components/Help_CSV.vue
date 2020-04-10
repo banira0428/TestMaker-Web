@@ -4,7 +4,7 @@
       <h1 class="h2 d-inline">CSV形式で問題集を編集する</h1>
     </div>
 
-    <p>大量の問題集をまとめて編集したい時は、エクセルやスプレッドシートのような表計算ソフトでの編集がオススメです。以下に、各問題形式とCSV形式との対応について解説します。</p>
+    <p>大量の問題をまとめて編集したい時は、エクセルやスプレッドシートのような表計算ソフトでの編集がオススメです。以下に、各問題形式とCSV形式との対応について解説します。</p>
 
     <b-card no-body class="mb-1" v-for="(item,index) in items" v-bind:key="index">
       <b-card-header header-tag="header" class="p-0" role="tab">
