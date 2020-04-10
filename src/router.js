@@ -4,6 +4,7 @@ import Tests from './components/Tests';
 import Questions from './components/Questions';
 import SignIn from './components/SignIn';
 import Help from './components/Help';
+import Help_CSV from './components/Help_CSV';
 import Terms from './components/Terms';
 import Privacy from './components/Privacy';
 import firebase from 'firebase';
@@ -16,6 +17,7 @@ const routes = [
   {path: '/questions', component: Questions},
   {path: '/signin', component: SignIn, meta: {isPublic: true}},
   {path: '/help', component: Help, meta: {isPublic: true}},
+  {path: '/help/csv', component: Help_CSV, meta: {isPublic: true}},
   {path: '/terms', component: Terms, meta: {isPublic: true}},
   {path: '/privacy', component: Privacy, meta: {isPublic: true}},
   {path: '/index', component: Home, meta: {isPublic: true}},
