@@ -18,11 +18,10 @@
           <b-card-text>
             <span v-html="item.answer"></span>
           </b-card-text>
-          <img alt="help" v-bind:src="item.img"/>
+          <b-card-img alt="help" v-bind:src="item.img"/>
         </b-card-body>
       </b-collapse>
     </b-card>
-
     <p class="mt-3">編集が完了した後は、完成した表をCSV形式でエクスポートしていただき、アプリ内の「ファイルのインポート」から、問題集として保存することができます。</p>
   </div>
 </template>
