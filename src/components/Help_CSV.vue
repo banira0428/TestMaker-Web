@@ -18,7 +18,7 @@
           <b-card-text>
             <span v-html="item.answer"></span>
           </b-card-text>
-          <b-card-img alt="help" v-bind:src="item.img"/>
+          <img class="help-img" alt="help" v-bind:src="item.img"/>
         </b-card-body>
       </b-collapse>
     </b-card>
@@ -79,5 +79,9 @@
 </script>
 
 <style scoped>
+
+  .help-img{
+    max-width: 100%;
+  }
 
 </style>
