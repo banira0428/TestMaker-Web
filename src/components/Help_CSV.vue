@@ -5,6 +5,7 @@
     </div>
 
     <p>大量の問題をまとめて編集したい時は、エクセルやスプレッドシートのような表計算ソフトでの編集がオススメです。以下に、各問題形式とCSV形式との対応について解説します。</p>
+    <p>※注意事項※ テキストファイルを保存する時の文字コードは「UTF-8」にしておく必要があります。（例えば、テキストの文字コードが「Shift-JIS」になっていると、文字化けが発生してしまいアプリで正しく読み込む事ができません）</p>
 
     <b-card no-body class="mb-1" v-for="(item,index) in items" v-bind:key="index">
       <b-card-header header-tag="header" class="p-0" role="tab">
@@ -18,7 +19,7 @@
           <b-card-text>
             <span v-html="item.answer"></span>
           </b-card-text>
-          <img class="help-img" alt="help" v-bind:src="item.img"/>
+          <img class="help-img" alt="help" v-bind:src="item.img" v-show="item.img !== '' "/>
         </b-card-body>
       </b-collapse>
     </b-card>
