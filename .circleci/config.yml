@@ -46,7 +46,7 @@ jobs:
           command: sudo npm install renovate -g
       - run:
           name: execute renovate
-          command: renovate --platform github --token $GITHUB_API_TOKEN --endpoint https://github.com/ banira0428/TestMaker-Web
+          command: renovate --platform github --token $GITHUB_API_TOKEN --endpoint https://api.github.com banira0428/TestMaker-Web
 
 workflows:
   version: 2.1
