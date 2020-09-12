@@ -36,6 +36,17 @@ jobs:
       - run:
           name: deploy to Firebase Hosting
           command: ./node_modules/.bin/firebase deploy --token=$FIREBASE_TOKEN
+  update-libraries:
+    docker:
+      - image: circleci/node:10.14.2
+    steps:
+      - checkout
+      - run:
+          name: install renovate
+          command: npm install renovate
+      - run:
+          name: execute renovate
+          command: renovate --platform github --token $GITHUB_API_TOKEN --endpoint https://github.com/ banira0428/TestMaker-Web
 
 workflows:
   version: 2.1
@@ -45,6 +56,11 @@ workflows:
           filters:
             branches:
               only: master
+      - update-libraries:
+          filters:
+            branches:
+              only: master
+
 
 
 
