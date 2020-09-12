@@ -6,7 +6,7 @@ version: 2.1
 jobs:
   deploy:
     docker:
-      - image: circleci/node:10.14.2
+      - image: circleci/node:10.22.0
     steps:
       - checkout
       - run:
@@ -38,7 +38,7 @@ jobs:
           command: ./node_modules/.bin/firebase deploy --token=$FIREBASE_TOKEN
   update-libraries:
     docker:
-      - image: circleci/node:10.14.2
+      - image: circleci/node:10.22.0
     steps:
       - checkout
       - run:
